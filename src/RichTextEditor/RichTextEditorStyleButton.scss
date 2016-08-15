@@ -1,0 +1,12 @@
+@import '../colors.scss';
+
+.main {
+  background: 0;
+  border: 0;
+  color: $gray;
+  outline: 0;
+}
+
+.active {
+  color: $gray-dark;
+}

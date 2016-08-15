@@ -5,3 +5,15 @@
   height: 100%;
   width: 100%;
 }
+
+.header {
+  border-bottom: 1px solid $gray;
+  padding: 4px;
+}
+
+.control {
+  color: $gray;
+
+  &BOLD { font-style: bold }
+  &ITALIC { font-style: italic }
+}
