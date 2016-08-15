@@ -1,16 +1,39 @@
-import React, {Component} from 'react';
+import React, {Component, PropTypes} from 'react';
+import components from './components';
+import styles from './ComponentsListing.scss';
 
 export default class ComponentsListing extends Component {
 
   static displayName = 'ComponentsListing';
+
+  static contextTypes = {
+    router: PropTypes.shape({
+      push: PropTypes.func.isRequired
+    }).isRequired
+  };
   
   render() {
     return (
-      <div>
-        Hello World
+      <div className={styles.main}>
+        <h1>UI Components</h1>
+        <div className={styles.list}>
+          {this._renderComponentsList()}
+        </div>
       </div>
     );
   }
+
+  _renderComponentsList = () => {
+    return components.map((component, i) => (
+      <button key={i} onClick={() => this._handleClick(component)}>
+        {component}
+      </button>
+    ));
+  };
+
+  _handleClick = (component) => {
+    this.context.router.push(`/components/${component}`);
+  };
 
 }
 
