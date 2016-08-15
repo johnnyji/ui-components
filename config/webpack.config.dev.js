@@ -46,11 +46,11 @@ module.exports = {
       }, {
         test: /.scss$/,
         include: [SRC],
-        loader: ExtractTextPlugin.extract('style', 'css!postcss!sass')
+        loader: ExtractTextPlugin.extract('style', 'css?modules!postcss!sass')
       }, {
         test: /\.css$/,
         include: [SRC],
-        loader: 'style!css!postcss'
+        loader: 'style!css?modules!postcss'
       }
     ],
     postcss: [autoprefixer],
