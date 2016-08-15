@@ -6,6 +6,12 @@ import pureRender from 'pure-render-decorator';
 import RichTextEditorStyleButton from './RichTextEditorStyleButton';
 import styles from './RichTextEditor.scss';
 
+const customStyleMap = {
+  'HIGHLIGHT': {
+    backgroundColor: '#F1C40F'
+  }
+};
+
 @pureRender
 export default class RichTextEditor extends Component {
 
@@ -13,7 +19,12 @@ export default class RichTextEditor extends Component {
 
   static propTypes = {
     className: PropTypes.string,
-    content: PropTypes.instanceOf(EditorState)
+    content: PropTypes.instanceOf(EditorState),
+    placeholder: PropTypes.string.isRequired
+  };
+
+  static defaultProps = {
+    placeholder: 'Start typing here...'
   };
 
   constructor(props) {
@@ -25,18 +36,32 @@ export default class RichTextEditor extends Component {
   }
   
   render() {
-    const {className} = this.props;
+    const {className, placeholder} = this.props;
     const {editorState} = this.state;
+    const content = editorState.getCurrentContent();
+    const emptyAndStyled = !content.hasText() && (content.getBlockMap().first().getType() !== 'unstyled');
+
+    // If the user changes block type before entering any text, we need
+    // to hide the placeholder
+    const editorClassNames = classNames(
+      styles.editor,
+      emptyAndStyled ? styles.hidePlaceholder : null
+    );
     
     return (
       <div className={classNames(className, styles.main)}>
         <header className={styles.header}>
           {this._renderStyleOptions()}
         </header>
-        <Editor
-          editorState={editorState}
-          handleKeyCommand={this._handleKeyCommand}
-          onChange={this._handleChange} />
+        <div className={editorClassNames}>
+          <Editor
+            editorState={editorState}
+            customStyleMap={customStyleMap}
+            handleKeyCommand={this._handleKeyCommand}
+            onChange={this._handleChange}
+            placeholder={placeholder}
+            spellCheck={true} />
+        </div>
       </div>
     );
   }

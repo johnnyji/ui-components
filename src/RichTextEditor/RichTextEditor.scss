@@ -4,6 +4,8 @@
   background-color: $white;
   height: 100%;
   width: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
 .header {
@@ -16,4 +18,42 @@
 
   &BOLD { font-style: bold }
   &ITALIC { font-style: italic }
+}
+
+.editor {
+  padding: 8px;
+  position: relative;
+  flex: 1 1 auto;
+}
+
+.editor :global(.RichEditor-root) {
+  background: #FFF;
+  border: 1px solid yellow;
+  font-family: courier, sans-serif;
+  font-size: 16px;
+  padding: 15px;
+}
+
+// The `placeholder` for Draft.js is a blocking div. Therefore,
+// when the placeholder is present, we need to make sure that the editor
+// is shifted up to where the placeholder is.
+//
+// We use the adjacent sibling selector to only apply the margin-top shift to the editor
+// when the placeholder is present
+.editor :global(.public-DraftEditorPlaceholder-root + .DraftEditor-editorContainer) {
+  margin-top: -18px;
+}
+
+// Changes the placeholder color
+.editor :global(.public-DraftEditorPlaceholder-root) {
+  color: $gray;
+}
+
+// Changes the placeholder color on focus
+.editor :global(.public-DraftEditorPlaceholder-hasFocus) {
+  color: $gray-light;
+}
+
+.hidePlaceholder :global(.public-DraftEditorPlaceholder-root) {
+  display: none;
 }
