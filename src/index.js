@@ -1,12 +1,15 @@
 import 'babel-polyfill';
 import {render} from 'react-dom';
-import {Router, browserHistory, IndexRoute} from 'react-router';
+import {Router, browserHistory, IndexRoute, Route} from 'react-router';
 import React from 'react';
-import View from './View';
+import App from './App';
+import ComponentsListing from './ComponentsListing';
 
 const routes = (
   <Router history={browserHistory}>
-    <IndexRoute component={View} />
+    <Route component={App} path='/'>
+      <IndexRoute component={ComponentsListing} />
+    </Route>
   </Router>
 );
 

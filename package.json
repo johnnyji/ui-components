@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "eslint": "eslint ./src",
-    "server-dev": "webpack-dev-server --devtool-eval --inline --hot --watch --progress --colors --display-error-details --content-base lib --config ./config/webpack.config.dev.js",
+    "server-dev": "open http://localhost:8080 && webpack-dev-server --devtool-eval --inline --hot --watch --progress --colors --display-error-details --content-base lib --config ./config/webpack.config.dev.js",
     "validate-webpack-dev": "webpack-validator ./config/webpack.config.dev.js"
   },
   "author": "Johnny Ji",
