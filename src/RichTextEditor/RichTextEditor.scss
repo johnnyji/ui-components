@@ -21,17 +21,21 @@
 }
 
 .editor {
-  padding: 8px;
+  padding: 16px;
   position: relative;
   flex: 1 1 auto;
 }
 
-.editor :global(.RichEditor-root) {
+// Styles the editor container
+.editor :global(.DraftEditor-root) {
   background: #FFF;
-  border: 1px solid yellow;
   font-family: courier, sans-serif;
   font-size: 16px;
-  padding: 15px;
+  min-height: 100px;
+}
+// Styles the editor content
+.editor :global(.public-DraftEditor-content) {
+  min-height: 100px;
 }
 
 // The `placeholder` for Draft.js is a blocking div. Therefore,
@@ -52,6 +56,12 @@
 // Changes the placeholder color on focus
 .editor :global(.public-DraftEditorPlaceholder-hasFocus) {
   color: $gray-light;
+}
+
+// This makes sure that if we click on the placeholder, it will still
+// focus the editor
+.editor :global(.public-DraftEditorPlaceholder-inner) {
+  pointer-events: none;
 }
 
 .hidePlaceholder :global(.public-DraftEditorPlaceholder-root) {
