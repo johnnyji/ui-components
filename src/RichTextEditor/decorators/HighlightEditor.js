@@ -1,25 +1,10 @@
 import React, {Component, PropTypes} from 'react';
+import createRegexFromWords from '../utils/createRegexFromWords';
 import CustomPropTypes from '../utils/CustomPropTypes';
 import findWithRegex from '../utils/findWithRegex';
 import HighlightedWord from '../HighlightedWord';
 import Immutable from 'immutable';
 import ImmutablePropTypes from 'react-immutable-proptypes';
-
-const NEVER_MATCHING_REGEX = /$a/;
-
-
-const createRegexFromWords = (words) => {
-  if (!words || !words.size) return NEVER_MATCHING_REGEX;
-
-  // This will produce: `words|like|this|blah`
-  const wordsRegexString = words.reduce((string, word, i) => {
-    // The last word doesn't need an `or` seperator
-    if (!words.get(i + 1)) return `${string}${word}`;
-    return `${string}${word}|`;
-  }, '');
-
-  return new RegExp(`(${wordsRegexString})`, 'g');
-};
 
 // Finds each instance of a word in the contentBlock that matches the regex,
 // and then fires the callback for each found word, so it can be replaced by our custom HighlightedWord
