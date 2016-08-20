@@ -5,7 +5,7 @@ import React from 'react';
 import App from './App';
 import ComponentsListing from './ComponentsListing';
 import Demo from './Demo';
-import RichTextEditor from './RichTextEditor/demo';
+import RichTextEditor from './RichTextEditor/demo/index';
 
 // Have to use hashHistory due to no server
 const routes = (

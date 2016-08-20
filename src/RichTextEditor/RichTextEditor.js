@@ -1,19 +1,13 @@
 import React, {Component, PropTypes} from 'react';
-import {ContentState, Editor, EditorState, RichUtils} from 'draft-js';
+import {CompositeDecorator, ContentState, Editor, EditorState, RichUtils} from 'draft-js';
 import classNames from 'classnames';
+import CustomPropTypes from './utils/CustomPropTypes';
 import Immutable from 'immutable';
-import ImmutablePropTypes from 'react-immutable-proptypes';
 import inlineStyles from './utils/inlineStyles';
 import onstop from 'onstop';
 import pureRender from 'pure-render-decorator';
 import RichTextEditorStyleButton from './RichTextEditorStyleButton';
 import styles from './RichTextEditor.scss';
-
-const customStyleMap = {
-  'HIGHLIGHT': {
-    backgroundColor: '#F1C40F'
-  }
-};
 
 @pureRender
 export default class RichTextEditor extends Component {
@@ -22,13 +16,8 @@ export default class RichTextEditor extends Component {
 
   static propTypes = {
     className: PropTypes.string,
-    decorators: ImmutablePropTypes.listOf(
-      ImmutablePropTypes.mapContains({
-        component: PropTypes.element.isRequired,
-        strategy: PropTypes.func.isRequired
-      })
-    ),
     content: PropTypes.instanceOf(ContentState),
+    decorators: CustomPropTypes.decorators,
     onStopTyping: PropTypes.func,
     onStopTypingTimeout: PropTypes.number.isRequired,
     placeholder: PropTypes.string.isRequired
@@ -42,24 +31,39 @@ export default class RichTextEditor extends Component {
   constructor(props) {
     super(props);
 
+    // Composing decorators that enhance functionality on the editor
+    const decorators = props.decorators && props.decorators.size ?
+      new CompositeDecorator(props.decorators.toArray()) : undefined;
+
     this.state = {
       editorState: props.content ?
-        EditorState.createWithContent(content) :
-        EditorState.createEmpty()
+        EditorState.createWithContent(props.content, decorators) :
+        EditorState.createEmpty(decorators)
     };
 
     this._onStopTyping = onstop(props.onStopTypingTimeout, this._handleStopTyping);
   }
 
   componentWillReceiveProps (nextProps) {
-    const {content} = this.props;
-    const {content: nextContent} = nextProps;
+    const {content, decorators} = this.props;
+    const {content: nextContent, decorators: nextDecorators} = nextProps;
 
     // If the ContentState of the editor has changed, we want to push that onto the EditorState
     if (!Immutable.is(content, nextContent)) {
       const {editorState} = this.state;
       this.setState({editorState: editorState.push(editorState, nextContent)});
+      return;
     }
+
+    // If the decorators have changed, we need to update them
+    if (!Immutable.is(decorators, nextDecorators)) {
+      console.log('hit');
+      const {editorState} = this.state;
+      const newDecorator = nextDecorators && nextDecorators.size ?
+        new CompositeDecorator(nextDecorators.toArray()) : undefined;
+      this.setState({editorState: EditorState.set(editorState, {decorator: newDecorator})});
+    }
+
   }
 
   componentDidMount () {
@@ -69,7 +73,6 @@ export default class RichTextEditor extends Component {
   }
 
   componentWillUnmount () {
-    debugger;
     this.Editor.refs.editorContainer.removeEventListener('keyup', this._onStopTyping);
   }
 
@@ -91,10 +94,9 @@ export default class RichTextEditor extends Component {
         <header className={styles.header}>
           {this._renderStyleOptions()}
         </header>
-        <div className={editorClassNames}>
+        <div className={editorClassNames} onClick={this._handleFocus}>
           <Editor
             editorState={editorState}
-            customStyleMap={customStyleMap}
             handleKeyCommand={this._handleKeyCommand}
             onChange={this._handleChange}
             placeholder={placeholder}
@@ -117,6 +119,10 @@ export default class RichTextEditor extends Component {
         key={value}
         onClick={this._handleInlineStyleChange} />
     )).toArray();
+  };
+
+  _handleFocus = () => {
+    this.Editor.focus();
   };
   
   _handleInlineStyleChange = (style) => {

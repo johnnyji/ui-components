@@ -1,13 +1,15 @@
-import React, {Component} from 'react';
-import {CompositeDecorator} from 'draft-js';
+import React, {Component, PropTypes} from 'react';
+import CustomPropTypes from '../utils/CustomPropTypes';
+import findWithRegex from '../utils/findWithRegex';
 import HighlightedWord from '../HighlightedWord';
 import Immutable from 'immutable';
+import ImmutablePropTypes from 'react-immutable-proptypes';
 
 const NEVER_MATCHING_REGEX = /$a/;
 
 
 const createRegexFromWords = (words) => {
-  if (!words.size) return NEVER_MATCHING_REGEX;
+  if (!words || !words.size) return NEVER_MATCHING_REGEX;
 
   // This will produce: `words|like|this|blah`
   const wordsRegexString = words.reduce((string, word, i) => {
@@ -19,47 +21,20 @@ const createRegexFromWords = (words) => {
   return new RegExp(`(${wordsRegexString})`, 'g');
 };
 
-
-const findWithRegex = (regex, text, cb) => {
-  let matchArr;
-  let start;
-
-  while ((matchArr = regex.exec(text)) !== null) {
-    start = matchArr.index;
-    cb(start, start + matchArr[0].length);
-  }
-};
-
-/**
- * Finds each instance of a word in the contentBlock that matches the regex,
- * and then fires the callback for each found word, so it can be replaced by our custom HighlightedWord
- * component
- * @param  {}   contentBlock - The content block state of our editor
- * @param  {Function} cb - Callback function to invoke every time a matched word is found
- */
-const highlightWordStrategy = (contentBlock, cb) => {
+// Finds each instance of a word in the contentBlock that matches the regex,
+// and then fires the callback for each found word, so it can be replaced by our custom HighlightedWord
+// component
+const highlightWordStrategy = (regex) => (contentBlock, cb) => {
   findWithRegex(regex, contentBlock.getText(), cb);
 };
 
-const highlightDecorator = Immutable.Map({
-  strategy: highlightWordStrategy,
-  component: HighlightedWord
-});
-
-export default (ComposedEditor) => (class HighlightEditor extends Component {
+export default (ComposedEditorComponent) => (class HighlightEditor extends Component {
 
   static displayName = 'HighlightEditor';
 
   static propTypes = {
-    decorators: ImmutablePropTypes.listOf(
-      ImmutablePropTypes.mapContains({
-        strategy: PropTypes.func.isRequired,
-        component: PropTypes.element.isRequired 
-      })
-    ).isRequired,
-    highlightWords: ImmutablePropTypes.listOf(
-      PropTypes.string
-    ).isRequired
+    decorators: CustomPropTypes.decorators.isRequired,
+    highlightWords: ImmutablePropTypes.listOf(PropTypes.string).isRequired
   };
 
   static defaultProps = {
@@ -70,27 +45,39 @@ export default (ComposedEditor) => (class HighlightEditor extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      highlightWordsRegex: createRegexFromWords(props.highlightWords);
+      decorators: this._combineDecorators(props)
     };
   }
 
-  componentWillReceiveProps() {
-    const {highlightWords: words} = this.props;
-    const {highlightWords: nextWords} = this.props;
+  componentWillReceiveProps(nextProps) {
+    const {decorators, highlightWords: words} = this.props;
+    const {decorators: nextDecorators, highlightWords: nextWords} = nextProps;
 
-    if (!Immutable.is(words, nextWords)) {
-      this.setState({highlightWordsRegex: createRegexFromWords(nextWords)});
+    if (!Immutable.is(words, nextWords) || !Immutable.is(decorators, nextDecorators)) {
+      this.setState({decorators: this._combineDecorators(nextProps)});
     }
   }
 
   render() {
+    /* eslint-disable no-unused-vars */
     const {decorators, highlightWords, ...restProps} = this.props;
+    /* eslint-enable no-unused-vars */
 
     return (
-      <ComposedEditor
+      <ComposedEditorComponent
         {...restProps}
-        decorators={decorators.push(highlightDecorator)} />
+        decorators={this.state.decorators} />
     );
   }
+
+  _combineDecorators = (props) => {
+    const regex = createRegexFromWords(props.highlightWords);
+    const highlightDecorator = {
+      strategy: highlightWordStrategy(regex),
+      component: HighlightedWord
+    };
+
+    return props.decorators.push(highlightDecorator);
+  };
 
 });
