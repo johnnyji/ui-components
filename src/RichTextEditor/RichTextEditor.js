@@ -1,7 +1,8 @@
 import React, {Component, PropTypes} from 'react';
-import {Editor, EditorState, RichUtils} from 'draft-js';
+import {convertToRaw, Editor, EditorState, RichUtils} from 'draft-js';
 import classNames from 'classnames';
 import inlineStyles from './utils/inlineStyles';
+import onstop from 'onstop';
 import pureRender from 'pure-render-decorator';
 import RichTextEditorStyleButton from './RichTextEditorStyleButton';
 import styles from './RichTextEditor.scss';
@@ -20,10 +21,13 @@ export default class RichTextEditor extends Component {
   static propTypes = {
     className: PropTypes.string,
     content: PropTypes.instanceOf(EditorState),
+    onStopTyping: PropTypes.func,
+    onStopTypingTimeout: PropTypes.number.isRequired,
     placeholder: PropTypes.string.isRequired
   };
 
   static defaultProps = {
+    onStopTypingTimeout: 300,
     placeholder: 'Start typing here...'
   };
 
@@ -33,8 +37,21 @@ export default class RichTextEditor extends Component {
     this.state = {
       editorState: EditorState.createEmpty(),
     };
+
+    this._onStopTyping = onstop(props.onStopTypingTimeout, this._handleStopTyping);
   }
-  
+
+  componentDidMount () {
+    if (this.props.onStopTyping) {
+      this.Editor.refs.editorContainer.addEventListener('keyup', this._onStopTyping);
+    }
+  }
+
+  componentWillUnmount () {
+    debugger;
+    this.Editor.refs.editorContainer.removeEventListener('keyup', this._onStopTyping);
+  }
+
   render() {
     const {className, placeholder} = this.props;
     const {editorState} = this.state;
@@ -60,6 +77,7 @@ export default class RichTextEditor extends Component {
             handleKeyCommand={this._handleKeyCommand}
             onChange={this._handleChange}
             placeholder={placeholder}
+            ref={this._setEditorRef}
             spellCheck={true} />
         </div>
       </div>
@@ -97,6 +115,14 @@ export default class RichTextEditor extends Component {
     }
     
     return false;
+  };
+
+  _handleStopTyping = () => {
+    this.props.onStopTyping(convertToRaw(this.state.editorState.getCurrentContent()));
+  };
+
+  _setEditorRef = (node) => {
+    this.Editor = node;
   };
 
 }

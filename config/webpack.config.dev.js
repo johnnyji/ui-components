@@ -4,7 +4,7 @@ const path = require('path');
 
 const ROOT = path.join(__dirname, './../');
 const SRC = path.join(ROOT, 'src');
-const PRESETS = ['es2015', 'stage-0', 'react'];
+const PRESETS = ['es2015', 'stage-0', 'react', 'react-hmre'];
 const PLUGINS = ['transform-decorators-legacy'];
 
 module.exports = {
@@ -26,7 +26,8 @@ module.exports = {
   },
   plugins: [
     // Extracts all the styles into a single `style.css` file served at the `publicPath`
-    new ExtractTextPlugin('style.css', {allChunks: true})
+    new ExtractTextPlugin('style.css', {allChunks: true}),
+
   ],
   module: {
     loaders: [
@@ -55,5 +56,6 @@ module.exports = {
     ],
     postcss: [autoprefixer],
     noParse: /\.min\.js/
+    // Implement hot module reloading for SCSS and JS
   }
 };

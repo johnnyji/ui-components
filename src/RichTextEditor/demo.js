@@ -15,10 +15,16 @@ export default class Demo extends Component {
   render() {
     return (
       <div style={styles.wrapper}>
-        <RichTextEditor />
+        <RichTextEditor
+          onStopTyping={this._handleStopTyping}
+          />
       </div>
     );
   }
+
+  _handleStopTyping = (editorState) => {
+    debugger;
+  };
 
 }
 
