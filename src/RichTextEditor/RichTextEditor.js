@@ -58,8 +58,9 @@ export default class RichTextEditor extends Component {
     // If the decorators have changed, we need to update them
     if (!Immutable.is(decorators, nextDecorators)) {
       const {editorState} = this.state;
+      debugger;
       const newDecorator = new CompositeDecorator(nextDecorators.toArray());
-      console.log(newDecorator._decorator);
+      debugger;
       this.setState({editorState: EditorState.set(editorState, {decorator: newDecorator})});
     }
 
