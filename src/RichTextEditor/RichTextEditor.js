@@ -33,7 +33,7 @@ export default class RichTextEditor extends Component {
     super(props);
 
     // Composing decorators that enhance functionality on the editor
-    const decorators = new CompositeDecorator(props.decorators.toArray());
+    const decorators = !props.decorators.size ? undefined : new CompositeDecorator(props.decorators.toArray());
 
     this.state = {
       editorState: props.content ?
@@ -58,9 +58,7 @@ export default class RichTextEditor extends Component {
     // If the decorators have changed, we need to update them
     if (!Immutable.is(decorators, nextDecorators)) {
       const {editorState} = this.state;
-      debugger;
       const newDecorator = new CompositeDecorator(nextDecorators.toArray());
-      debugger;
       this.setState({editorState: EditorState.set(editorState, {decorator: newDecorator})});
     }
 

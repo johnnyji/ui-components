@@ -12,13 +12,11 @@ const createRegexFromWords = (words) => {
   if (!words || !words.size) return NEVER_MATCHING_REGEX;
 
   // This will produce: `words|like|this|blah`
-  const wordsRegexString = words
-    .filter((word) => word !== '')
-    .reduce((string, word, i) => {
-      // The last word doesn't need an `or` seperator
-      if (!words.get(i + 1)) return `${string}${word}`;
-      return `${string}${word}|`;
-    }, '');
+  const wordsRegexString = words.reduce((string, word, i) => {
+    // The last word doesn't need an `or` seperator
+    if (!words.get(i + 1)) return `${string}${word}`;
+    return `${string}${word}|`;
+  }, '');
 
   return new RegExp(`(${wordsRegexString})`, 'g');
 };
@@ -73,7 +71,13 @@ export default (ComposedEditorComponent) => (class HighlightEditor extends Compo
   }
 
   _combineDecorators = (props) => {
-    const regex = createRegexFromWords(props.highlightWords);
+    // This makes sure that no empty strings are considered highlight words
+    const validHighlightWords = props.highlightWords.filter((w) => w !== '');
+
+    // If there are no words to highlight, just return the existing decorators
+    if (!validHighlightWords.size) return props.decorators;
+
+    const regex = createRegexFromWords(validHighlightWords);
     const highlightDecorator = {
       strategy: highlightWordStrategy(regex),
       component: HighlightedWord
