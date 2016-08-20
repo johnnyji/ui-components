@@ -1,7 +1,7 @@
 ## Third Party Software Notices:
 
 `UI Components` is not possible without the use of open-source projects,
-their licenses and noted as follows:
+their licenses are noted as follows:
 
 
 ### [autoprefixer-loader](https://github.com/passy/autoprefixer-loader)
