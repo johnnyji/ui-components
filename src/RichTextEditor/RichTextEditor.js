@@ -1,6 +1,8 @@
 import React, {Component, PropTypes} from 'react';
-import {convertToRaw, Editor, EditorState, RichUtils} from 'draft-js';
+import {ContentState, Editor, EditorState, RichUtils} from 'draft-js';
 import classNames from 'classnames';
+import Immutable from 'immutable';
+import ImmutablePropTypes from 'react-immutable-proptypes';
 import inlineStyles from './utils/inlineStyles';
 import onstop from 'onstop';
 import pureRender from 'pure-render-decorator';
@@ -20,7 +22,13 @@ export default class RichTextEditor extends Component {
 
   static propTypes = {
     className: PropTypes.string,
-    content: PropTypes.instanceOf(EditorState),
+    decorators: ImmutablePropTypes.listOf(
+      ImmutablePropTypes.mapContains({
+        component: PropTypes.element.isRequired,
+        strategy: PropTypes.func.isRequired
+      })
+    ),
+    content: PropTypes.instanceOf(ContentState),
     onStopTyping: PropTypes.func,
     onStopTypingTimeout: PropTypes.number.isRequired,
     placeholder: PropTypes.string.isRequired
@@ -35,10 +43,23 @@ export default class RichTextEditor extends Component {
     super(props);
 
     this.state = {
-      editorState: EditorState.createEmpty(),
+      editorState: props.content ?
+        EditorState.createWithContent(content) :
+        EditorState.createEmpty()
     };
 
     this._onStopTyping = onstop(props.onStopTypingTimeout, this._handleStopTyping);
+  }
+
+  componentWillReceiveProps (nextProps) {
+    const {content} = this.props;
+    const {content: nextContent} = nextProps;
+
+    // If the ContentState of the editor has changed, we want to push that onto the EditorState
+    if (!Immutable.is(content, nextContent)) {
+      const {editorState} = this.state;
+      this.setState({editorState: editorState.push(editorState, nextContent)});
+    }
   }
 
   componentDidMount () {
@@ -113,12 +134,11 @@ export default class RichTextEditor extends Component {
       this._handleChange(newState);
       return true;
     }
-    
     return false;
   };
 
   _handleStopTyping = () => {
-    this.props.onStopTyping(convertToRaw(this.state.editorState.getCurrentContent()));
+    this.props.onStopTyping(this.state.editorState.getCurrentContent());
   };
 
   _setEditorRef = (node) => {
