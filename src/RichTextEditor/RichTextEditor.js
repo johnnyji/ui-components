@@ -3,11 +3,11 @@ import {CompositeDecorator, ContentState, Editor, EditorState, RichUtils} from '
 import classNames from 'classnames';
 import CustomPropTypes from './utils/CustomPropTypes';
 import Immutable from 'immutable';
-import inlineStyles from './utils/inlineStyles';
 import onstop from 'onstop';
 import pureRender from 'pure-render-decorator';
-import RichTextEditorStyleButton from './RichTextEditorStyleButton';
+import RichTextEditorHeader from './RichTextEditorHeader';
 import styles from './RichTextEditor.scss';
+import textStyles from './textStyles.scss';
 
 @pureRender
 export default class RichTextEditor extends Component {
@@ -89,11 +89,13 @@ export default class RichTextEditor extends Component {
     
     return (
       <div className={classNames(className, styles.main)}>
-        <header className={styles.header}>
-          {this._renderStyleOptions()}
-        </header>
+        <RichTextEditorHeader
+          editorState={editorState}
+          onToggleBlockType={this._handleToggleBlockType}
+          onToggleInlineStyle={this._handleToggleInlineStyle} />
         <div className={editorClassNames} onClick={this._handleFocus}>
           <Editor
+            blockStyleFn={this._renderBlockStyles}
             editorState={editorState}
             handleKeyCommand={this._handleKeyCommand}
             onChange={this._handleChange}
@@ -105,29 +107,30 @@ export default class RichTextEditor extends Component {
     );
   }
 
-  _renderStyleOptions = () => {
-    const currentInlineStyle = this.state.editorState.getCurrentInlineStyle();
-
-    return inlineStyles.map((name, value) => (
-      <RichTextEditorStyleButton
-        active={currentInlineStyle.contains(value)}
-        className={styles[`control${value}`]}
-        inlineStyleName={name}
-        inlineStyle={value}
-        key={value}
-        onClick={this._handleInlineStyleChange} />
-    )).toArray();
+  _renderBlockStyles = (contentBlock) => {
+    switch (contentBlock.getType()) {
+      case 'blockquote': return textStyles.blockquote;
+      default: return null;
+    }
   };
 
   _handleFocus = () => {
     this.Editor.focus();
   };
+
+  _handleToggleBlockType = (blockType) => {
+    this._handleChange(RichUtils.toggleBlockType(this.state.editorState, blockType), true);
+  };
   
-  _handleInlineStyleChange = (style) => {
+  _handleToggleInlineStyle = (style) => {
     this._handleChange(RichUtils.toggleInlineStyle(this.state.editorState, style));
   };
 
-  _handleChange = (editorState) => {
+  _handleChange = (editorState, refocus) => {
+    if (refocus) {
+      this.setState({editorState}, this._handleFocus);
+      return;
+    }
     this.setState({editorState});
   };
 

@@ -8,18 +8,6 @@
   flex-direction: column;
 }
 
-.header {
-  padding: 4px;
-}
-
-.control {
-  color: $gray;
-
-  &BOLD { font-style: bold }
-  &ITALIC { font-style: italic }
-  &UNDERLINE { text-decoration: underline }
-}
-
 .editor {
   padding: 16px;
   position: relative;

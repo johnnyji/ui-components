@@ -1,11 +1,13 @@
 import React, {Component, PropTypes} from 'react';
 import classNames from 'classnames';
-import inlineStyles from './utils/inlineStyles';
+import config from './config';
 import pureRender from 'pure-render-decorator';
 import styles from './RichTextEditorStyleButton.scss';
 
-const inlineStylesArr = inlineStyles.keySeq().toArray();
-const inlineStyleNamesArr = inlineStyles.valueSeq().toArray();
+const blockStyleStyles = config.blockStyles.map(({style}) => style);
+const blockStyleLabels = config.blockStyles.map(({label}) => label);
+const inlineStyleStyles = config.inlineStyles.map(({style}) => style);
+const inlineStyleLabels = config.inlineStyles.map(({label}) => label);
 
 @pureRender
 export default class RichTextEditorStyleButton extends Component {
@@ -14,11 +16,11 @@ export default class RichTextEditorStyleButton extends Component {
 
   static propTypes = {
     active: PropTypes.bool.isRequired,
-    activeClassName: PropTypes.string.isRequired,
+    activeClassName: PropTypes.string,
     className: PropTypes.string,
-    inlineStyle: PropTypes.oneOf(inlineStylesArr).isRequired,
-    inlineStyleName: PropTypes.oneOf(inlineStyleNamesArr).isRequired,
-    onClick: PropTypes.func.isRequired
+    label: PropTypes.oneOf([...blockStyleLabels, ...inlineStyleLabels]).isRequired,
+    onToggle: PropTypes.func.isRequired,
+    style: PropTypes.oneOf([...blockStyleStyles, ...inlineStyleStyles]).isRequired
   };
 
   static defaultProps = {
@@ -26,7 +28,7 @@ export default class RichTextEditorStyleButton extends Component {
   };
   
   render() {
-    const {active, activeClassName, className, inlineStyleName} = this.props;
+    const {active, activeClassName, className, label} = this.props;
     const classes = classNames(
       styles.main,
       className,
@@ -35,13 +37,13 @@ export default class RichTextEditorStyleButton extends Component {
 
     return (
       <button className={classes} onClick={this._handleClick}>
-        {inlineStyleName}
+        {label}
       </button>
     );
   }
 
   _handleClick = () => {
-    this.props.onClick(this.props.inlineStyle);
+    this.props.onToggle(this.props.style, !this.props.active);
   };
 
 }

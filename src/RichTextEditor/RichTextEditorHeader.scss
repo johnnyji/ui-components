@@ -1,0 +1,15 @@
+@import '../colors.scss';
+
+.main {
+  padding: 4px;
+}
+
+.control {
+  color: $gray;
+
+  &blockquote { font-family: cursive, serif }
+  &bold { font-style: bold }
+  &italic { font-style: italic }
+  &underline { text-decoration: underline }
+}
+
