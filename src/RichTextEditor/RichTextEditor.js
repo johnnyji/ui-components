@@ -119,18 +119,14 @@ export default class RichTextEditor extends Component {
   };
 
   _handleToggleBlockType = (blockType) => {
-    this._handleChange(RichUtils.toggleBlockType(this.state.editorState, blockType), true);
+    this._handleChange(RichUtils.toggleBlockType(this.state.editorState, blockType));
   };
   
   _handleToggleInlineStyle = (style) => {
     this._handleChange(RichUtils.toggleInlineStyle(this.state.editorState, style));
   };
 
-  _handleChange = (editorState, refocus) => {
-    if (refocus) {
-      this.setState({editorState}, this._handleFocus);
-      return;
-    }
+  _handleChange = (editorState) => {
     this.setState({editorState});
   };
 

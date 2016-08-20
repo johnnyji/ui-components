@@ -43,6 +43,9 @@ export default class RichTextEditorStyleButton extends Component {
   }
 
   _handleClick = (e) => {
+    // We need to prevent the default behaviour of the mousedown in
+    // order to remain focus on the editor, otherwise clicking the button
+    // doesn't apply inline styles
     e.preventDefault();
     this.props.onToggle(this.props.style);
   };
