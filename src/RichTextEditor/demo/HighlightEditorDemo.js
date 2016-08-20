@@ -14,7 +14,7 @@ export default class HighlightEditorDemo extends Component {
   static displayName = 'HighlightEditorDemo';
 
   state = {
-    highlightKeywords: Immutable.List()
+    highlightWords: Immutable.List()
   };
   
   render() {
@@ -23,14 +23,14 @@ export default class HighlightEditorDemo extends Component {
         <label>Seperate highlight words by space</label>
         <input onChange={this._handleKeywordChange} placeholder="Keyword to highlight (space seperated)" />
         <Editor
-          className={styles.HighlightEditorDemo_editor}
-          highlightWords={this.state.highlightKeywords} />
+          className={styles.Demo__editor}
+          highlightWords={this.state.highlightWords} />
       </div>
     );
   }
 
   _handleKeywordChange = ({target: {value}}) => {
-    this.setState({highlightKeywords: Immutable.List(value.split(' '))});
+    this.setState({highlightWords: Immutable.List(value.split(' '))});
   };
 
 }

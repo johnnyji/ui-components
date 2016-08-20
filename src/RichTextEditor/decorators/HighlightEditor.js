@@ -12,11 +12,13 @@ const createRegexFromWords = (words) => {
   if (!words || !words.size) return NEVER_MATCHING_REGEX;
 
   // This will produce: `words|like|this|blah`
-  const wordsRegexString = words.reduce((string, word, i) => {
-    // The last word doesn't need an `or` seperator
-    if (!words.get(i + 1)) return `${string}${word}`;
-    return `${string}${word}|`;
-  }, '');
+  const wordsRegexString = words
+    .filter((word) => word !== '')
+    .reduce((string, word, i) => {
+      // The last word doesn't need an `or` seperator
+      if (!words.get(i + 1)) return `${string}${word}`;
+      return `${string}${word}|`;
+    }, '');
 
   return new RegExp(`(${wordsRegexString})`, 'g');
 };

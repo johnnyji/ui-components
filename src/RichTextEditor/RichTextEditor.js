@@ -24,6 +24,7 @@ export default class RichTextEditor extends Component {
   };
 
   static defaultProps = {
+    decorators: Immutable.List(),
     onStopTypingTimeout: 300,
     placeholder: 'Start typing here...'
   };
@@ -32,8 +33,7 @@ export default class RichTextEditor extends Component {
     super(props);
 
     // Composing decorators that enhance functionality on the editor
-    const decorators = props.decorators && props.decorators.size ?
-      new CompositeDecorator(props.decorators.toArray()) : undefined;
+    const decorators = new CompositeDecorator(props.decorators.toArray());
 
     this.state = {
       editorState: props.content ?
@@ -57,10 +57,9 @@ export default class RichTextEditor extends Component {
 
     // If the decorators have changed, we need to update them
     if (!Immutable.is(decorators, nextDecorators)) {
-      console.log('hit');
       const {editorState} = this.state;
-      const newDecorator = nextDecorators && nextDecorators.size ?
-        new CompositeDecorator(nextDecorators.toArray()) : undefined;
+      const newDecorator = new CompositeDecorator(nextDecorators.toArray());
+      console.log(newDecorator._decorator);
       this.setState({editorState: EditorState.set(editorState, {decorator: newDecorator})});
     }
 
