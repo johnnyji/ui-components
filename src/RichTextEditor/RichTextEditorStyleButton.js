@@ -36,14 +36,15 @@ export default class RichTextEditorStyleButton extends Component {
     );
 
     return (
-      <button className={classes} onClick={this._handleClick}>
+      <button className={classes} onMouseDown={this._handleClick}>
         {label}
       </button>
     );
   }
 
-  _handleClick = () => {
-    this.props.onToggle(this.props.style, !this.props.active);
+  _handleClick = (e) => {
+    e.preventDefault();
+    this.props.onToggle(this.props.style);
   };
 
 }

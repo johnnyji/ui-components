@@ -6,8 +6,8 @@ export default {
     {label: '""', style: 'blockquote'}
   ],
   inlineStyles: [
-    {label: 'B', style: 'bold'},
-    {label: 'I', style: 'italic'},
-    {label: 'U', style: 'underline'}
+    {label: 'B', style: 'BOLD'},
+    {label: 'I', style: 'ITALIC'},
+    {label: 'U', style: 'UNDERLINE'}
   ]
 };
