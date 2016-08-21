@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import DemoView from '../../demo/index';
+import DisabledInputDemo from './DisabledInputDemo';
 import RegularInputDemo from './RegularInputDemo';
 import pureRender from 'pure-render-decorator';
 
@@ -10,7 +11,8 @@ export default class InputDemo extends Component {
 
   render () {
     const demos = [
-      {title: 'Regular Input', component: RegularInputDemo}
+      {title: 'Regular Input', component: RegularInputDemo},
+      {title: 'Disabled Input', component: DisabledInputDemo}
     ];
 
     return (

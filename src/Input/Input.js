@@ -4,12 +4,14 @@ import CustomPropTypes from './utils/CustomPropTypes';
 import Immutable from 'immutable';
 import ImmutablePropTypes from 'react-immutable-proptypes';
 import InputError from './InputError';
+import pureRender from 'pure-render-decorator';
 import styles from './Input.scss';
 
 // Key code for the Enter key
 const ENTER = 13;
 const RETURN_TRUE = () => true;
 
+@pureRender
 export default class Input extends Component {
 
   static displayName = 'Input';
@@ -22,6 +24,7 @@ export default class Input extends Component {
     displayErrorOn: PropTypes.oneOf(['change', 'blur']).isRequired,
     error: PropTypes.string,
     errorType: PropTypes.oneOf(['error', 'warning']).isRequired,
+    inputClassName: PropTypes.string,
     label: PropTypes.oneOfType([
       PropTypes.element,
       PropTypes.string
@@ -62,6 +65,7 @@ export default class Input extends Component {
       disabled,
       error,
       errorType,
+      inputClassName,
       label,
       labelIcon,
       required,
@@ -69,13 +73,18 @@ export default class Input extends Component {
       value
     } = this.props;
     const inputLabel = labelIcon ? <span>{labelIcon}{label}</span> : label;
+    const inputClasses = classNames(
+      styles.input,
+      inputClassName,
+      disabled ? styles.disabled : null
+    );
 
     return (
       <div className={classNames(className, styles.main)}>
         {required && <span className={styles.requiredAsterisk}>*</span>}
         <input
           autoFocus={autoFocus}
-          className={styles.inputField}
+          className={inputClasses}
           disabled={disabled}
           placeholder={inputLabel}
           onBlur={this._handleBlur}

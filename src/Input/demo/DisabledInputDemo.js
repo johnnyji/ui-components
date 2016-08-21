@@ -3,25 +3,18 @@ import Input from '../Input';
 import pureRender from 'pure-render-decorator';
 
 @pureRender
-export default class RegularInputDemo extends Component {
+export default class DisabledInputDemo extends Component {
 
-  static displayName = 'RegularInputDemo';
-
-  state = {
-    error: null,
-    value: ''
-  }
+  static displayName = 'DisabledInputDemo';
 
   render() {
     return (
       <div>
-        <div>Value: {this.state.value}</div>
-        <div>Error: {this.state.error}</div>
         <Input
-          error={this.state.error}
+          disabled={true}
           onUpdate={this._handleUpdate}
           placeholder="Type here..."
-          value={this.state.value} />
+          value="" />
       </div>
     );
   }

@@ -4,6 +4,20 @@
   position: relative;
 }
 
+.input {
+  background: 0;
+  border: 0;
+  border-bottom: 2px solid $gray-dark;
+  outline: 0;
+  &:focus {
+    border-bottom-color: $gray;
+  }
+}
+
+.disabled {
+  border-bottom: 2px dotted $gray;
+}
+
 .requiredAsterisk {
   color: $error;
   position: absolute;

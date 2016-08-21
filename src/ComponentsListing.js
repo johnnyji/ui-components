@@ -1,7 +1,9 @@
 import React, {Component, PropTypes} from 'react';
 import components from './components';
+import pureRender from 'pure-render-decorator';
 import styles from './ComponentsListing.scss';
 
+@pureRender
 export default class ComponentsListing extends Component {
 
   static displayName = 'ComponentsListing';
