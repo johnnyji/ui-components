@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import Input from '../Input';
 import pureRender from 'pure-render-decorator';
+import styles from './index.scss';
 
 @pureRender
 export default class RegularInputDemo extends Component {
@@ -14,10 +15,11 @@ export default class RegularInputDemo extends Component {
 
   render() {
     return (
-      <div>
-        <div>Value: {this.state.value}</div>
-        <div>Error: {this.state.error}</div>
+      <div className={styles.content}>
+        <div className={styles.label}>Value: {this.state.value}</div>
+        <div className={styles.label}>Error: {this.state.error}</div>
         <Input
+          className={styles.input}
           error={this.state.error}
           label="Type here..."
           onUpdate={this._handleUpdate}
