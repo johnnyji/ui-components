@@ -17,11 +17,12 @@ export default class RichTextEditor extends Component {
   static propTypes = {
     activeColor: PropTypes.string,
     className: PropTypes.string,
-    content: PropTypes.instanceOf(ContentState),
     enableRich: PropTypes.bool.isRequired,
     decorators: CustomPropTypes.decorators,
+    defaultContent: PropTypes.instanceOf(ContentState),
     onStopTyping: PropTypes.func,
-    onStopTypingTimeout: PropTypes.number.isRequired,
+    onStopTypingTimeout: PropTypes.number,
+    onUpdate: PropTypes.func,
     placeholder: PropTypes.string.isRequired
   };
 
@@ -39,8 +40,8 @@ export default class RichTextEditor extends Component {
     const decorators = !props.decorators.size ? undefined : new CompositeDecorator(props.decorators.toArray());
 
     this.state = {
-      editorState: props.content ?
-        EditorState.createWithContent(props.content, decorators) :
+      editorState: props.defaultContent ?
+        EditorState.createWithContent(props.defaultContent, decorators) :
         EditorState.createEmpty(decorators)
     };
 
@@ -48,15 +49,8 @@ export default class RichTextEditor extends Component {
   }
 
   componentWillReceiveProps (nextProps) {
-    const {content, decorators} = this.props;
-    const {content: nextContent, decorators: nextDecorators} = nextProps;
-
-    // If the ContentState of the editor has changed, we want to push that onto the EditorState
-    if (!Immutable.is(content, nextContent)) {
-      const {editorState} = this.state;
-      this.setState({editorState: editorState.push(editorState, nextContent)});
-      return;
-    }
+    const {decorators} = this.props;
+    const {decorators: nextDecorators} = nextProps;
 
     // If the decorators have changed, we need to update them
     if (!Immutable.is(decorators, nextDecorators)) {
@@ -138,6 +132,7 @@ export default class RichTextEditor extends Component {
 
   _handleChange = (editorState) => {
     this.setState({editorState});
+    if (this.props.onUpdate) this.props.onUpdate(editorState.getCurrentContent());
   };
 
   _handleKeyCommand = (command) => {

@@ -12,7 +12,7 @@ export default class DemoView extends Component {
   static propTypes = {
     demoViews: PropTypes.arrayOf(
       PropTypes.shape({
-        component: PropTypes.node.isRequired,
+        component: PropTypes.func.isRequired,
         title: PropTypes.string.isRequired
       }).isRequired
     ).isRequired
@@ -43,7 +43,7 @@ export default class DemoView extends Component {
           </TabList>
           {this.props.demoViews.map(({component}, i) => (
             <TabPanel className={styles.panel} key={i}>
-              <DemoContent content={component} />
+              <DemoContent component={component} />
             </TabPanel>
           ))}
         </Tabs>

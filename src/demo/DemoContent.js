@@ -8,11 +8,11 @@ export default class DemoContent extends Component {
   static displayName = 'DemoContent';
 
   static propTypes = {
-    content: PropTypes.element.isRequired
+    component: PropTypes.func.isRequired
   };
 
   render() {
-    const {content: DemoComponent} = this.props;
+    const {component: DemoComponent} = this.props;
 
     return (
       <div className={styles.content}>

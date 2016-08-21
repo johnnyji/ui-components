@@ -4,6 +4,7 @@ import convertToHtml from '../utils/convertToHtml';
 import HighlightEditor from '../decorators/HighlightEditor';
 import highlightWords from '../utils/highlightWords';
 import Immutable from 'immutable';
+import Input from '../../Input';
 import RichTextEditor from '../RichTextEditor';
 import styles from './index.scss';
 
@@ -20,6 +21,7 @@ export default class HighlightEditorDemo extends Component {
   state = {
     hex: '#F5D76E',
     highlightWords: Immutable.List(),
+    highlightWordsString: '',
     html: '',
     rawHtml: ''
   };
@@ -28,17 +30,19 @@ export default class HighlightEditorDemo extends Component {
     return (
       <div className={styles.content}>
         <div className={styles.HighlightEditorDemo__section}>
-          <h1>Rich Text Editor</h1>
-          <label>Seperate highlight words by space</label>
-          <input onChange={this._handleKeywordChange} placeholder="Keyword to highlight (space seperated)" />
+          <h3>Rich Text Editor</h3>
+          <Input
+            onUpdate={this._handleKeywordChange}
+            label="Keyword to highlight (space seperated)"
+            value={this.state.highlightWordsString} />
           <Editor
             className={styles.Demo__editor}
             highlightWords={this.state.highlightWords}
-            onStopTyping={this._handleStopTyping}
+            onUpdate={this._handleUpdate}
             ref="editor" />
         </div>
         <div className={styles.HighlightEditorDemo__section}>
-          <h1>Content Editable Output</h1>
+          <h3>Content Editable Output</h3>
           <label>Current highlight color: {this.state.hex}</label>
           <input type='color' value={this.state.hex} onChange={this._handlePickColor} />
           <div
@@ -50,7 +54,7 @@ export default class HighlightEditorDemo extends Component {
     );
   }
 
-  _handleStopTyping = (content) => {
+  _handleUpdate = (content) => {
     // HTML Before we add styles to the mark tags
     let rawHtml = convertToHtml()(content);
     rawHtml = highlightWords(rawHtml, this.state.highlightWords, 'mark');
@@ -63,9 +67,10 @@ export default class HighlightEditorDemo extends Component {
     });
   };
 
-  _handleKeywordChange = ({target: {value}}) => {
+  _handleKeywordChange = (value) => {
     const words = Immutable.List(value.split(' '));
     this.setState({
+      highlightWordsString: value,
       highlightWords: words,
     });
   };
