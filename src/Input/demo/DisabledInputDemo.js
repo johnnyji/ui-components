@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import Input from '../Input';
 import pureRender from 'pure-render-decorator';
+import styles from './index.scss';
 
 @pureRender
 export default class DisabledInputDemo extends Component {
@@ -9,8 +10,9 @@ export default class DisabledInputDemo extends Component {
 
   render() {
     return (
-      <div>
+      <div className={styles.content}>
         <Input
+          className={styles.input}
           disabled={true}
           label='Disabled'
           onUpdate={this._handleUpdate}
@@ -19,7 +21,6 @@ export default class DisabledInputDemo extends Component {
     );
   }
 
-  _handleUpdate = (value, error) => {
-    this.setState({error, value});
-  }
+  _handleUpdate = () => {};
+
 }
