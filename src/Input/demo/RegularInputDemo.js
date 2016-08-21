@@ -19,8 +19,8 @@ export default class RegularInputDemo extends Component {
         <div>Error: {this.state.error}</div>
         <Input
           error={this.state.error}
+          label="Type here..."
           onUpdate={this._handleUpdate}
-          placeholder="Type here..."
           value={this.state.value} />
       </div>
     );

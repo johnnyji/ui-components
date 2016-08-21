@@ -10,14 +10,14 @@ export default class InputError extends Component {
 
   static propTypes = {
     error: PropTypes.string.isRequired,
-    errorType: PropTypes.oneOf(['error', 'warning']).isRequired
+    type: PropTypes.oneOf(['error', 'warning']).isRequired
   };
 
   render() {
-    const {error, errorType} = this.props;
+    const {error, type} = this.props;
     const classes = classNames(
       styles.main,
-      styles[errorType]
+      styles[type]
     );
 
     return (

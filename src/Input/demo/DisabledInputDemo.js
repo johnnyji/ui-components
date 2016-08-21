@@ -12,8 +12,8 @@ export default class DisabledInputDemo extends Component {
       <div>
         <Input
           disabled={true}
+          label='Disabled'
           onUpdate={this._handleUpdate}
-          placeholder="Type here..."
           value="" />
       </div>
     );

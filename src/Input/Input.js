@@ -46,10 +46,11 @@ export default class Input extends Component {
     disabled: false,
     displayError: false,
     displayErrorOn: 'blur',
-    patternMatches: {
+    errorType: 'error',
+    patternMatches: Immutable.Map({
       error: '',
       validator: RETURN_TRUE
-    },
+    }),
     required: false,
     type: 'text'
   };
@@ -135,17 +136,19 @@ export default class Input extends Component {
   _getError = (value) => {
     const {patternMatches} = this.props;
 
+    if (!patternMatches) return null;
+
     if (Immutable.List.isList(patternMatches)) {
       // Goes through all the validators and returns the first the error of the
       // first pattern that the value doesn't match
       const errorMatch = patternMatches.find((pattern) => {
-        if (!pattern.validator(value)) return pattern.error;
+        if (!pattern.get('validator')(value)) return pattern.get('error');
       });
-      return errorMatch === undefined ? null : errorMatch.error;
+      return errorMatch === undefined ? null : errorMatch.get('error');
     }
 
     // Checks the validity of the value against the pattern, and returns an error if no match
-    return patternMatches.validator(value) ? null : patternMatches.error;
+    return patternMatches.get('validator')(value) ? null : patternMatches.get('error');
   };
 
   /**
