@@ -1,15 +1,15 @@
 @import '../colors.scss';
 
 .main {
-  padding: 4px;
+  padding: 12px 8px 0px;
 }
 
 .control {
   color: $gray;
 
   &blockquote { font-family: cursive, serif }
-  &bold { font-style: bold }
-  &italic { font-style: italic }
-  &underline { text-decoration: underline }
+  &BOLD { font-style: bold }
+  &ITALIC { font-style: italic }
+  &UNDERLINE { text-decoration: underline }
 }
 

@@ -11,6 +11,7 @@ export default class RichTextEditorHeader extends Component {
   static displayName = 'RichTextEditorHeader';
 
   static propTypes = {
+    activeColor: PropTypes.string,
     editorState: PropTypes.instanceOf(EditorState).isRequired,
     onToggleBlockType: PropTypes.func.isRequired,
     onToggleInlineStyle: PropTypes.func.isRequired
@@ -19,14 +20,14 @@ export default class RichTextEditorHeader extends Component {
   render() {
     return (
       <header className={styles.main}>
-        {this._renderBlockStyles()}
         {this._renderInlineStyles()}
+        {this._renderBlockStyles()}
       </header>
     );
   }
 
   _renderBlockStyles = () => {
-    const {editorState, onToggleBlockType} = this.props;
+    const {activeColor, editorState, onToggleBlockType} = this.props;
     const blockType = editorState
       .getCurrentContent()
       .getBlockForKey(editorState.getSelection().getStartKey())
@@ -35,6 +36,7 @@ export default class RichTextEditorHeader extends Component {
     return config.blockStyles.map(({label, style}) => (
       <RichTextEditorStyleButton
         active={blockType === style}
+        activeColor={activeColor}
         className={styles[`control${style}`]}
         label={label}
         onToggle={onToggleBlockType}
@@ -44,12 +46,13 @@ export default class RichTextEditorHeader extends Component {
   };
 
   _renderInlineStyles = () => {
-    const {editorState, onToggleInlineStyle} = this.props;
+    const {activeColor, editorState, onToggleInlineStyle} = this.props;
     const currentInlineStyle = editorState.getCurrentInlineStyle();
 
     return config.inlineStyles.map(({label, style}) => (
       <RichTextEditorStyleButton
         active={currentInlineStyle.has(style)}
+        activeColor={activeColor}
         className={styles[`control${style}`]}
         label={label}
         onToggle={onToggleInlineStyle}

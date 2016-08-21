@@ -15,8 +15,10 @@ export default class RichTextEditor extends Component {
   static displayName = 'RichTextEditor';
 
   static propTypes = {
+    activeColor: PropTypes.string,
     className: PropTypes.string,
     content: PropTypes.instanceOf(ContentState),
+    enableRich: PropTypes.bool.isRequired,
     decorators: CustomPropTypes.decorators,
     onStopTyping: PropTypes.func,
     onStopTypingTimeout: PropTypes.number.isRequired,
@@ -24,6 +26,7 @@ export default class RichTextEditor extends Component {
   };
 
   static defaultProps = {
+    enableRich: true,
     decorators: Immutable.List(),
     onStopTypingTimeout: 300,
     placeholder: 'Start typing here...'
@@ -75,7 +78,7 @@ export default class RichTextEditor extends Component {
   }
 
   render() {
-    const {className, placeholder} = this.props;
+    const {activeColor, className, enableRich, placeholder} = this.props;
     const {editorState} = this.state;
     const content = editorState.getCurrentContent();
     const emptyAndStyled = !content.hasText() && (content.getBlockMap().first().getType() !== 'unstyled');
@@ -89,10 +92,13 @@ export default class RichTextEditor extends Component {
     
     return (
       <div className={classNames(className, styles.main)}>
-        <RichTextEditorHeader
-          editorState={editorState}
-          onToggleBlockType={this._handleToggleBlockType}
-          onToggleInlineStyle={this._handleToggleInlineStyle} />
+        {enableRich &&
+          <RichTextEditorHeader
+            activeColor={activeColor}
+            editorState={editorState}
+            onToggleBlockType={this._handleToggleBlockType}
+            onToggleInlineStyle={this._handleToggleInlineStyle} />
+        }
         <div className={editorClassNames} onClick={this._handleFocus}>
           <Editor
             blockStyleFn={this._renderBlockStyles}
@@ -106,6 +112,10 @@ export default class RichTextEditor extends Component {
       </div>
     );
   }
+
+  getContent = () => {
+    return this.state.editorState.getCurrentContent();
+  };
 
   _renderBlockStyles = (contentBlock) => {
     switch (contentBlock.getType()) {

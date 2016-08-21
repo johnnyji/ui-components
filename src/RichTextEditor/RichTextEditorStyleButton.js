@@ -16,6 +16,7 @@ export default class RichTextEditorStyleButton extends Component {
 
   static propTypes = {
     active: PropTypes.bool.isRequired,
+    activeColor: PropTypes.string,
     activeClassName: PropTypes.string,
     className: PropTypes.string,
     label: PropTypes.oneOf([...blockStyleLabels, ...inlineStyleLabels]).isRequired,
@@ -28,7 +29,7 @@ export default class RichTextEditorStyleButton extends Component {
   };
   
   render() {
-    const {active, activeClassName, className, label} = this.props;
+    const {active, activeColor, activeClassName, className, label} = this.props;
     const classes = classNames(
       styles.main,
       className,
@@ -36,7 +37,10 @@ export default class RichTextEditorStyleButton extends Component {
     );
 
     return (
-      <button className={classes} onMouseDown={this._handleClick}>
+      <button
+        className={classes}
+        onMouseDown={this._handleClick}
+        style={activeColor ? {color: activeColor} : undefined}>
         {label}
       </button>
     );

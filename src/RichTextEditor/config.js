@@ -1,6 +1,15 @@
 export default {
-  highlight: {
-    tag: 'mark'
+  text: {
+    blockquote: {
+      tag: 'blockquote',
+      style: `
+        border-left: 5px solid #EEE;
+        color: #666;
+        font-family: 'Hoefler Text', 'Georgia', serif;
+        font-style: italic;
+        margin: 16px 0px;
+        padding:10px 20px;`
+    }
   },
   blockStyles: [
     {label: '""', style: 'blockquote'}
