@@ -1,3 +1,4 @@
+/* eslint-disable react/no-danger */
 import React, {Component} from 'react';
 import convertToHtml from '../utils/convertToHtml';
 import HighlightEditor from '../decorators/HighlightEditor';
@@ -63,7 +64,10 @@ export default class HighlightEditorDemo extends Component {
   };
 
   _handleKeywordChange = ({target: {value}}) => {
-    this.setState({highlightWords: Immutable.List(value.split(' '))});
+    const words = Immutable.List(value.split(' '));
+    this.setState({
+      highlightWords: words,
+    });
   };
 
   _handlePickColor = (e) => {
@@ -76,3 +80,4 @@ export default class HighlightEditorDemo extends Component {
   };
 
 }
+/* eslint-enable react/no-danger */
