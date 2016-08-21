@@ -5,6 +5,7 @@ import React from 'react';
 import App from './App';
 import ComponentsListing from './ComponentsListing';
 import Demo from './Demo';
+import Input from './Input/demo/index';
 import RichTextEditor from './RichTextEditor/demo/index';
 
 // Have to use hashHistory due to no server
@@ -13,6 +14,7 @@ const routes = (
     <Route component={App} path='/'>
       <IndexRoute component={ComponentsListing} />
       <Route component={Demo} path='components'>
+        <Route component={Input} path='RichTextEditor' />
         <Route component={RichTextEditor} path='RichTextEditor' />
       </Route>
     </Route>
