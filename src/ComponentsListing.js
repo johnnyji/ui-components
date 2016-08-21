@@ -15,7 +15,7 @@ export default class ComponentsListing extends Component {
   render() {
     return (
       <div className={styles.main}>
-        <h1>UI Components</h1>
+        <h1 className={styles.title}>UI Components</h1>
         <div className={styles.list}>
           {this._renderComponentsList()}
         </div>
@@ -25,7 +25,10 @@ export default class ComponentsListing extends Component {
 
   _renderComponentsList = () => {
     return components.map((component, i) => (
-      <button key={i} onClick={() => this._handleClick(component)}>
+      <button
+        className={styles.item}
+        key={i}
+        onClick={() => this._handleClick(component)}>
         {component}
       </button>
     ));

@@ -5,7 +5,7 @@ export default {
 
   errorMatcher: ImmutablePropTypes.mapContains({
     error: PropTypes.string.isRequired,
-    regex: PropTypes.instanceOf(RegExp).isRequired
+    regex: PropTypes.func.isRequired
   })
 
 };

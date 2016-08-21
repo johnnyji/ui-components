@@ -1,1 +1,12 @@
-Input.scss
+@import '../colors.scss';
+
+.main {
+  position: relative;
+}
+
+.requiredAsterisk {
+  color: $error;
+  position: absolute;
+  top: 0;
+  left: 0;
+}

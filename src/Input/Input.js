@@ -1,13 +1,14 @@
 import React, {Component, PropTypes} from 'react';
 import classNames from 'classnames';
-import CustomPropTypes from '../utils/CustomPropTypes';
-import Icon from './Icon';
+import CustomPropTypes from './utils/CustomPropTypes';
+import Immutable from 'immutable';
 import ImmutablePropTypes from 'react-immutable-proptypes';
-import MUITextField from 'material-ui/TextField';
+import InputError from './InputError';
 import styles from './Input.scss';
 
 // Key code for the Enter key
 const ENTER = 13;
+const RETURN_TRUE = () => true;
 
 export default class Input extends Component {
 
@@ -20,6 +21,7 @@ export default class Input extends Component {
     displayError: PropTypes.bool.isRequired,
     displayErrorOn: PropTypes.oneOf(['change', 'blur']).isRequired,
     error: PropTypes.string,
+    errorType: PropTypes.oneOf(['error', 'warning']).isRequired,
     label: PropTypes.oneOfType([
       PropTypes.element,
       PropTypes.string
@@ -31,6 +33,7 @@ export default class Input extends Component {
       ImmutablePropTypes.listOf(CustomPropTypes.errorMatcher),
       CustomPropTypes.errorMatcher
     ]).isRequired,
+    required: PropTypes.bool.isRequired,
     type: PropTypes.oneOf(['text', 'email', 'number', 'password']),
     value: PropTypes.string.isRequired,
   };
@@ -41,9 +44,10 @@ export default class Input extends Component {
     displayError: false,
     displayErrorOn: 'blur',
     patternMatches: {
-      regex: /.*/,
-      error: ''
+      error: '',
+      validator: RETURN_TRUE
     },
+    required: false,
     type: 'text'
   };
 
@@ -56,35 +60,31 @@ export default class Input extends Component {
       autoFocus,
       className,
       disabled,
+      error,
+      errorType,
       label,
       labelIcon,
+      required,
       type,
-      value,
-      width
+      value
     } = this.props;
-    const styles = {
-      width: width != null ? `${width}px` : '100%'
-    };
-    const inputLabel = labelIcon
-      ? <span><Icon icon={labelIcon} />{label}</span>
-      : label;
+    const inputLabel = labelIcon ? <span>{labelIcon}{label}</span> : label;
 
     return (
-      <div className={classNames(className, displayName)} style={styles}>
-        <MUITextField
+      <div className={classNames(className, styles.main)}>
+        {required && <span className={styles.requiredAsterisk}>*</span>}
+        <input
           autoFocus={autoFocus}
-          className={`${displayName}-input-field`}
+          className={styles.inputField}
           disabled={disabled}
-          errorText={this._renderErrorText()}
-          fullWidth={true}
-          hintText={inputLabel}
+          placeholder={inputLabel}
           onBlur={this._handleBlur}
           onChange={this._handleChange}
           onKeyDown={this._handleKeyDown}
           onFocus={this._handleFocus}
-          ref='input'
           type={type}
           value={value} />
+        {this._shouldRenderError() && <InputError error={error} type={errorType} />}
       </div>
     );
   }
@@ -102,41 +102,41 @@ export default class Input extends Component {
    * @return {Boolean} - The validity of the field
    */
   valid = () => {
-    return this.props.error === null && this._checkForError(this.props.value) === undefined;
+    return this.props.error === null && this._getError(this.props.value) === undefined;
   };
 
-  _renderErrorText = () => {
+  _shouldRenderError = () => {
     const {error, displayError} = this.props;
     const {shouldDislayError} = this.state;
 
     // No error
-    if (!error) return undefined;
+    if (!error) return null;
     // Error and we need to display it
     if (displayError || shouldDislayError) return error;
     // Error but no need to display it
-    return undefined;
+    return null;
   };
 
   /**
    * Checks it's provided value against the input field's `patternMatches` prop
    * and returns either an error or undefined
    * @param  {String} value - The value that we're validating
-   * @return {String|Undefined} - The error string in `patternMatches` or undefined
+   * @return {String|Null} - The error string in `patternMatches` or null
    */
-  _checkForError = (value) => {
+  _getError = (value) => {
     const {patternMatches} = this.props;
 
-    if (Array.isArray(patternMatches)) {
-      // Goes through all the regex patterns and returns the first the error of the
+    if (Immutable.List.isList(patternMatches)) {
+      // Goes through all the validators and returns the first the error of the
       // first pattern that the value doesn't match
       const errorMatch = patternMatches.find((pattern) => {
-        if (!pattern.regex.test(value)) return pattern.error;
+        if (!pattern.validator(value)) return pattern.error;
       });
-      return errorMatch === undefined ? undefined : errorMatch.error;
+      return errorMatch === undefined ? null : errorMatch.error;
     }
 
     // Checks the validity of the value against the pattern, and returns an error if no match
-    return patternMatches.regex.test(value) ? undefined : patternMatches.error;
+    return patternMatches.validator(value) ? null : patternMatches.error;
   };
 
   /**
@@ -162,7 +162,11 @@ export default class Input extends Component {
    * @param  {Object} e - The focus event object
    */
   _handleFocus = (e) => {
-    this.setState({shouldDislayError: false});
+    // It only makes sense to hide the error on focus, if the error is displayed
+    // on blur
+    if (this.props.displayErrorOn === 'blur') {
+      this.setState({shouldDislayError: false});
+    }
     this._submitValue(e);
   };
     
@@ -182,20 +186,14 @@ export default class Input extends Component {
   /**
    * Checks the input value, and submits it to the parent component, along with errors if there
    * are any.
-   * @param  {Object} e     - The event object that triggered the value submit
+   * @param  {Object} options    - The options argument
+   * @param  {Object} options.target.value    - The event object that triggered the value submit
    */
-  _submitValue = (e) => {
-    const {value} = e.target;
+  _submitValue = ({target: {value}}) => {
     // If the input value doesn't match the regex we passed in, we're going to trigger an error callback
-    const error = this._checkForError(value) || null;
-
-    // Only if `successKeys` and `errorKeys` are provided will the input field go through the trouble of
-    // building up the nested object based on those keys, otherwise it just passes back null
-    const nestedErrorObj = this.props.errorKeys ? createNestedObject(this.props.errorKeys, error) : null;
-    const nestedValueObj = this.props.successKeys ? createNestedObject(this.props.successKeys, value) : null;
-
+    const error = this._getError(value) || null;
     // Updates the parent component with both the value and the error
-    this.props.onUpdate(value, error, nestedValueObj, nestedErrorObj, e);
+    this.props.onUpdate(value, error);
   };
 
 }

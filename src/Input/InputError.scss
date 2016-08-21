@@ -1,0 +1,10 @@
+@import '../colors.scss';
+
+.main {
+  font-style: italic;
+  padding: 4px;
+  width: 100%;
+}
+
+.error { background-color: $error }
+.warning { background-color: $warning }

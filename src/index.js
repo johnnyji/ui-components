@@ -14,7 +14,7 @@ const routes = (
     <Route component={App} path='/'>
       <IndexRoute component={ComponentsListing} />
       <Route component={Demo} path='components'>
-        <Route component={Input} path='RichTextEditor' />
+        <Route component={Input} path='Input' />
         <Route component={RichTextEditor} path='RichTextEditor' />
       </Route>
     </Route>

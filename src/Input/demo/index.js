@@ -1,9 +1,21 @@
 import React, {Component} from 'react';
+import DemoView from '../../demo/index';
+import RegularInputDemo from './RegularInputDemo';
+import pureRender from 'pure-render-decorator';
 
-export class InputDemo extends Component {
-  render() {
+@pureRender
+export default class InputDemo extends Component {
+
+  static displayName = 'InputDemo';
+
+  render () {
+    const demos = [
+      {title: 'Regular Input', component: RegularInputDemo}
+    ];
+
     return (
-      <div></div>
+      <DemoView demoViews={demos} />
     );
   }
+
 }
