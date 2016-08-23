@@ -3,6 +3,7 @@ import {render} from 'react-dom';
 import {Router, hashHistory, IndexRoute, Route} from 'react-router';
 import React from 'react';
 import App from './App';
+import Clickable from './Clickable/demo/index';
 import ComponentsListing from './ComponentsListing';
 import Demo from './Demo';
 import Input from './Input/demo/index';
@@ -14,6 +15,7 @@ const routes = (
     <Route component={App} path='/'>
       <IndexRoute component={ComponentsListing} />
       <Route component={Demo} path='components'>
+        <Route component={Clickable} path='Clickable' />
         <Route component={Input} path='Input' />
         <Route component={RichTextEditor} path='RichTextEditor' />
       </Route>

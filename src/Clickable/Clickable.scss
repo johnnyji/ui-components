@@ -2,14 +2,19 @@
 
 .main {
   background: 0;
+  border: 0;
   cursor: pointer;
   outline: 0;
-  transition: color 250ms ease-out;
+  transition: color 150ms ease;
   &:hover {
-    background-color: $hover;
+    color: $hover;
   }
 }
 
 .disabled {
-  background-color: $disabled;
+  color: $disabled;
+  cursor: not-allowed;
+  &:hover {
+    color: $disabled;
+  }
 }

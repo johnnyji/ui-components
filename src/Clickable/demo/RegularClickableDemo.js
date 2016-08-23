@@ -1,7 +1,9 @@
 import React, {Component} from 'react';
 import Clickable from '../Clickable';
+import pureRender from 'pure-render-decorator';
 import styles from './index.scss';
 
+@pureRender
 export default class RegularClickabledDemo extends Component {
 
   static displayName = 'RegularClickabledDemo';

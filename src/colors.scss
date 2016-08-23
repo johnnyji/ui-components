@@ -5,6 +5,8 @@ $gray-light: #DADFE1;
 $gray-dark: #62676A;
 
 $error: #CF000F;
-$disabled: $gray;
+$disabled: darken($gray, 5%);
 $hover: #F9690E;
+$placeholder: $gray;
+$text: #282828;
 $warning: #F39C12;
