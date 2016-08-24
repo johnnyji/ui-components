@@ -1,5 +1,6 @@
 import React, {Component, PropTypes} from 'react';
 import {Tab, TabList, TabPanel, Tabs} from 'react-tabs';
+import Clickable from '../Clickable';
 import DemoContent from './DemoContent';
 import pureRender from 'pure-render-decorator';
 import styles from './index.scss';
@@ -31,9 +32,9 @@ export default class DemoView extends Component {
   render () {
     return (
       <div className={styles.main}>
-        <button onClick={this._goHome}>Home</button>
+        <Clickable onClick={this._goHome}>Home</Clickable>
         <Tabs
-          className={styles.main}
+          className={styles.tabs}
           onSelect={this._handleSelect}
           selectedIndex={this.state.selectedIndex}>
           <TabList>
