@@ -12,7 +12,9 @@ export default class SignaturePad extends Component {
   static propTypes = {
     className: PropTypes.string,
     label: PropTypes.string,
-    onSignature: PropTypes.func.isRequired,
+    onClear: PropTypes.func,
+    onSigning: PropTypes.func,
+    onSubmit: PropTypes.func.isRequired,
     resetLabel: PropTypes.oneOfType([
       PropTypes.string,
       PropTypes.element
@@ -44,20 +46,15 @@ export default class SignaturePad extends Component {
 
     return (
       <div className={classNames(styles.main, className)}>
-        <canvas className={styles.blankCanvas} ref='blankCanvas'></canvas>
         <div className={styles.pad} ref='canvasWrapper'>
-          <canvas ref='canvas'></canvas>
+          <canvas onMouseDown={this._handleSigning} ref='canvas'></canvas>
         </div>
         <footer className={styles.footer}>
-          <Clickable
-            className={styles.reset}
-            onClick={this._handleClear}>
+          <Clickable onClick={this._handleClear}>
             {resetLabel}
           </Clickable>
           {label && <div className={styles.label}>{label}</div>}
-          <Clickable
-            className={styles.submit}
-            onClick={this._handleSubmit}>
+          <Clickable onClick={this._handleSubmit}>
             {submitLabel}
           </Clickable>
         </footer>
@@ -67,15 +64,20 @@ export default class SignaturePad extends Component {
 
   _handleClear = () => {
     this.signaturePad.clear();
+    if (this.props.onClear) this.props.onClear();
+  };
+
+  _handleSigning = () => {
+    if (this.props.onSigning) this.props.onSigning();
   };
 
   _handleSubmit = () => {
-    const dataUrl = this.signaturePad.toDataURL();
+    if (this.signaturePad._isEmpty) {
+      this.props.onSubmit();
+      return;
+    }
 
-    // If the signature isn't blank, accept it
-    if (dataUrl === this.refs.blankCanvas.toDataURL()) return;
-
-    this.props.onSignature(dataUrl);
+    this.props.onSubmit(this.signaturePad.toDataURL());
   };
 
   _debouncedSizeCanvas = () => debounce(this._sizeCanvas, 10);
