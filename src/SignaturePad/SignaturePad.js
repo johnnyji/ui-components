@@ -1,26 +1,26 @@
 import React, {Component, PropTypes} from 'react';
 import classNames from 'classnames';
+import debounce from 'lodash/debounce';
 import Clickable from '../Clickable';
 import Pad from 'signature_pad';
-import pureRender from 'pure-render-decorator';
 import styles from './SignaturePad.scss';
 
-@pureRender
 export default class SignaturePad extends Component {
 
   static displayName = 'SignaturePad';
 
   static propTypes = {
     className: PropTypes.string,
+    label: PropTypes.string,
     onSignature: PropTypes.func.isRequired,
-    resetLabel: PropTypes.oneOf(
+    resetLabel: PropTypes.oneOfType([
       PropTypes.string,
       PropTypes.element
-    ).isRequired,
-    submitLabel: PropTypes.oneOf(
+    ]).isRequired,
+    submitLabel: PropTypes.oneOfType([
       PropTypes.string,
       PropTypes.element
-    ).isRequired
+    ]).isRequired
   };
 
   static defaultProps = {
@@ -28,22 +28,33 @@ export default class SignaturePad extends Component {
     submitLabel: 'Submit'
   };
 
-  componentDidMount = () => {
-    this.signaturePad = new Pad(this.refs.pad);
-  };
-  
+  componentDidMount() {
+    window.addEventListener('onresize', this._debouncedSizeCanvas);
+
+    this._sizeCanvas();
+    this.signaturePad = new Pad(this.refs.canvas);
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('onresize', this._debouncedSizeCanvas);
+  }
+
   render() {
-    const {className, resetLabel, submitLabel} = this.props;
+    const {className, label, resetLabel, submitLabel} = this.props;
 
     return (
       <div className={classNames(styles.main, className)}>
-        <canvas className={styles.pad} ref='pad'></canvas>
+        <canvas className={styles.blankCanvas} ref='blankCanvas'></canvas>
+        <div className={styles.pad} ref='canvasWrapper'>
+          <canvas ref='canvas'></canvas>
+        </div>
         <footer className={styles.footer}>
           <Clickable
             className={styles.reset}
             onClick={this._handleClear}>
             {resetLabel}
           </Clickable>
+          {label && <div className={styles.label}>{label}</div>}
           <Clickable
             className={styles.submit}
             onClick={this._handleSubmit}>
@@ -59,7 +70,24 @@ export default class SignaturePad extends Component {
   };
 
   _handleSubmit = () => {
-    this.props.onSignature(this.signaturePad.toDataUrl());
+    const dataUrl = this.signaturePad.toDataURL();
+
+    // If the signature isn't blank, accept it
+    if (dataUrl === this.refs.blankCanvas.toDataURL()) return;
+
+    this.props.onSignature(dataUrl);
+  };
+
+  _debouncedSizeCanvas = () => debounce(this._sizeCanvas, 10);
+
+  _sizeCanvas = () => {
+    const {canvas, canvasWrapper} = this.refs;
+    const wrapperDimensions = canvasWrapper.getBoundingClientRect();
+
+    // Make sure the canvas the same dimensions as its wrapper.
+    // `canvas` elements must have its dimensions set programmatically like so
+    canvas.height = wrapperDimensions.height;
+    canvas.width = wrapperDimensions.width;
   };
 
 }

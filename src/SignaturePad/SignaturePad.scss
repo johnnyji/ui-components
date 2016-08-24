@@ -1,20 +1,34 @@
 @import '../colors.scss';
+@import '../extends.scss';
 
 .main {
+  @extend .box-shadow;
+  display: flex;
+  flex-direction: column;
+  height: 325px;
+  padding: 16px;
   position: relative;
-  height: 400px;
-  width: 700px;
+  width: 600px;
+}
+
+.blankCanvas { display: none }
+
+.label {
+  color: $gray;
 }
 
 .pad {
   background-color: $white;
+  flex: 1 1 auto;
+  position: relative;
   width: 100%;
 }
 
 .footer {
   align-items: center;
-  background-color: $white;
+  border-top: 2px dashed $gray;
   display: flex;
   justify-content: space-between;
+  padding-top: 16px;
   width: 100%;
 }

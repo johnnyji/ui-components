@@ -8,7 +8,8 @@ export default class Clickable extends Component {
 
   static propTypes = {
     className: PropTypes.string,
-    disabled: PropTypes.bool.isRequired
+    disabled: PropTypes.bool.isRequired,
+    onClick: PropTypes.func.isRequired
   };
 
   static defaultProps = {
@@ -16,7 +17,7 @@ export default class Clickable extends Component {
   };
   
   render() {
-    const {children, className, disabled} = this.props;
+    const {children, className, disabled, onClick} = this.props;
     const classes = classNames(
       styles.main,
       className,
@@ -24,7 +25,9 @@ export default class Clickable extends Component {
     );
 
     return (
-      <button className={classes}>
+      <button
+        className={classes}
+        onClick={onClick}>
         {children}
       </button>
     );
