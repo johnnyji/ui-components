@@ -1,5 +1,6 @@
 export default [
   'Clickable',
   'Input',
-  'RichTextEditor'
+  'RichTextEditor',
+  'SignaturePad'
 ];

@@ -1,0 +1,20 @@
+@import '../colors.scss';
+
+.main {
+  position: relative;
+  height: 400px;
+  width: 700px;
+}
+
+.pad {
+  background-color: $white;
+  width: 100%;
+}
+
+.footer {
+  align-items: center;
+  background-color: $white;
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}

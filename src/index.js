@@ -8,6 +8,7 @@ import ComponentsListing from './ComponentsListing';
 import Demo from './Demo';
 import Input from './Input/demo/index';
 import RichTextEditor from './RichTextEditor/demo/index';
+import SignaturePad from './SignaturePad/demo/index';
 
 // Have to use hashHistory due to no server
 const routes = (
@@ -18,6 +19,7 @@ const routes = (
         <Route component={Clickable} path='Clickable' />
         <Route component={Input} path='Input' />
         <Route component={RichTextEditor} path='RichTextEditor' />
+        <Route component={SignaturePad} path='SignaturePad' />
       </Route>
     </Route>
   </Router>
