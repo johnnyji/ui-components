@@ -3,17 +3,6 @@
   "env": {
     "development": {
       "presets": ["react-hmre"]
-    },
-    "production": {
-      ignore: [
-        "src/**/demo",
-        "src/demo/**",
-        "src/App.js",
-        "src/components.js",
-        "src/ComponentListings.js",
-        "src/Demo.js",
-        "src/index.js"
-      ]
     }
   },
   "plugins": ["transform-decorators-legacy"]
