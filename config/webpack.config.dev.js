@@ -18,7 +18,7 @@ module.exports = {
     // See: http://stackoverflow.com/questions/31907672/how-to-set-multiple-file-entry-and-output-in-project-with-webpack
     filename: '[name]',
     // This is where the assets are physically written on disk
-    path: path.join(ROOT, './build/'),
+    path: path.join(ROOT, './html/'),
     // This is where the assets are served up. In our case, it'd be `http://localhost:8080/assets/bundle.js`
     publicPath: '/assets/'
   },

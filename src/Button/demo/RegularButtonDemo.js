@@ -6,7 +6,7 @@ import styles from './index.scss';
 @pureRender
 export default class RegularButtondDemo extends Component {
 
-  static displayName = 'RegularButtondDemo';
+  static displayName = 'RegularButtonDemo';
   
   render() {
     return (
