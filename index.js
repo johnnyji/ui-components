@@ -4,4 +4,4 @@ module.exports = {
   Input: require('./lib/Input.js'),
   RichTextEditor: require('./lib/RichTextEditor.js'),
   SignaturePad: require('./lib/SignaturePad.js')
-}
+};

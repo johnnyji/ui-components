@@ -1,7 +1,7 @@
 const autoprefixer = require('autoprefixer');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const path = require('path');
-const webpack = require('webpack');
+// const webpack = require('webpack');
 
 const ROOT = path.join(__dirname, './../');
 const SRC = path.join(ROOT, 'src');
@@ -9,7 +9,7 @@ const PRESETS = ['es2015', 'stage-0', 'react'];
 const PLUGINS = ['transform-decorators-legacy'];
 
 module.exports = {
-  devtool: 'cheap-module-source-map',
+  // devtool: 'cheap-module-source-map',
   entry: {
     'Button.js': path.join(SRC, 'Button/index.js'),
     'Clickable.js': path.join(SRC, 'Clickable/index.js'),
@@ -28,47 +28,41 @@ module.exports = {
   resolve: {
     extensions: ['', '.js', '.json', '.scss']
   },
-  plugins: [
-    new webpack.DefinePlugin({
-      'process.env': {
-        'NODE_ENV': JSON.stringify('production')
-      }
-    }),
-    // Extracts all the styles into a single `style.css` file served at the `publicPath`
-    new ExtractTextPlugin('style.css', {allChunks: true}),
-    // Extracts all the common bits of code into a single to reduce code size,
-    new webpack.optimize.CommonsChunkPlugin('common.js'),
-    // Minifies JS code
-    new webpack.optimize.UglifyJsPlugin()
-    // new webpack.optimize.AggresiveMergingPlugin()
-  ],
+  // plugins: [
+  //   new webpack.DefinePlugin({
+  //     'process.env': {
+  //       'NODE_ENV': JSON.stringify('production')
+  //     }
+  //   }),
+  //   // Extracts all the styles into a single `style.css` file served at the `publicPath`
+  //   new ExtractTextPlugin('style.css', {allChunks: true}),
+  //   // Extracts all the common bits of code into a single to reduce code size,
+  //   new webpack.optimize.CommonsChunkPlugin('common.js'),
+  //   // Minifies JS code
+  //   new webpack.optimize.UglifyJsPlugin()
+  // ],
   module: {
     loaders: [
       {
         test: /.js$/,
         include: [SRC],
         loader: 'babel',
-        query: {
-          cacheDirectory: true,
-          presets: PRESETS,
-          plugins: PLUGINS
-        }
-      }, {
-        test: /.html$/,
-        include: [SRC],
-        loader: 'html'
+        // query: {
+        //   cacheDirectory: true,
+        //   presets: PRESETS,
+        //   plugins: PLUGINS
+        // }
       }, {
         test: /.scss$/,
         include: [SRC],
-        loader: ExtractTextPlugin.extract('style', 'css?modules!postcss!sass')
+        // loader: ExtractTextPlugin.extract('style', 'css?modules!postcss!sass'),
+        loader: 'style!css?modules!postcss!sass'
       }, {
         test: /\.css$/,
         include: [SRC],
         loader: 'style!css?modules!postcss'
       }
     ],
-    postcss: [autoprefixer],
-    noParse: /\.min\.js/
-    // Implement hot module reloading for SCSS and JS
+    postcss: [autoprefixer]
   }
 };

@@ -9,12 +9,9 @@
         "src/**/demo",
         "src/demo/**",
         "src/App.js",
-        "src/App.scss",
         "src/components.js",
         "src/ComponentListings.js",
-        "src/ComponentListings.scss",
         "src/Demo.js",
-        "src/Demo.scss",
         "src/index.js"
       ]
     }
