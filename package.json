@@ -6,9 +6,9 @@
   "scripts": {
     "build:clean": "rimraf ./build",
     "build:remove-demo-files": "cd ./build && rimraf ./demo ./**/demo",
-    "build:remove-unused-styles": "cd ./build && rimraf ./ComponentsListing.scss ./Demo.scss ./App.scss",
-    "build:styles": "cd src && copyfiles ./*.scss ./*.css ./**/*.scss ./**/**/*.scss ../build",
-    "build:js": "NODE_ENV=production babel ./src --out-dir ./build --presets es2015,stage-0,react --plugins transform-decorators-legacy --ignore src/**/demo,src/demo,src/App.js,src/components.js,src/ComponentsListing.js,src/Demo.js,src/index.js",
+    "build:remove-unused-styles": "cd ./build && rimraf ./ComponentsListing.css ./Demo.css ./App.css",
+    "build:styles": "node-sass ./src --output ./build && cd ./src && copyfiles ./*.css ../build",
+    "build:js": "NODE_ENV=production babel ./src --out-dir ./build --ignore src/**/demo,src/demo,src/App.js,src/components.js,src/ComponentsListing.js,src/Demo.js,src/index.js",
     "build": "npm run build:clean && npm run build:js && npm run build:styles && npm run build:remove-unused-styles && npm run build:remove-demo-files",
     "release:pre": "mv src src-temp && mv build src",
     "release:post": "rimraf src && mv src-temp src && npm run build:clean",
