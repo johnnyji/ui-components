@@ -49,6 +49,7 @@
     "react": "^15.3.0",
     "react-dom": "^15.3.0",
     "react-immutable-proptypes": "^2.1.0",
+    "react-keydown": "^1.6.2",
     "react-router": "^2.6.1",
     "react-tabs": "^0.7.0",
     "signature_pad": "^1.5.3",

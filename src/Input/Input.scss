@@ -7,12 +7,12 @@
 .input {
   background: 0;
   border: 0;
-  border-bottom: 2px solid $gray-dark;
+  border-bottom: 2px solid $brand-light;
   outline: 0;
   padding: 4px 2px;
   width: 100%;
   &:focus {
-    border-bottom-color: $gray;
+    border-bottom-color: $brand;
   }
 }
 
