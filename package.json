@@ -4,6 +4,8 @@
   "description": "A collection of UI components",
   "main": "index.js",
   "scripts": {
+    "clean": "rm -rf lib",
+    "deploy": "BABEL_ENV=production babel src --out-dir lib",
     "eslint": "eslint ./src",
     "server-dev": "open http://localhost:8080 && webpack-dev-server --devtool-eval --inline --hot --watch --progress --colors --display-error-details --content-base lib --config ./config/webpack.config.dev.js",
     "validate-webpack-dev": "webpack-validator ./config/webpack.config.dev.js"

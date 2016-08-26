@@ -1,0 +1,16 @@
+@import '../colors.scss';
+
+.main {
+  background: 0; 
+  border: 2px solid $brand;
+  color: $brand;
+  cursor: pointer;
+  outline: 0;
+  padding: 4px 6px;
+}
+
+.disabled {
+  color: $disabled;
+  border-color: $disabled;
+  cursor: not-allowed;
+}
