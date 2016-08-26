@@ -1,7 +1,7 @@
 module.exports = {
-  Button: require('./lib/Button.js'),
-  Clickable: require('./lib/Clickable.js'),
-  Input: require('./lib/Input.js'),
-  RichTextEditor: require('./lib/RichTextEditor.js'),
-  SignaturePad: require('./lib/SignaturePad.js')
+  Button: require('./Button/index.js'),
+  Clickable: require('./Clickable/index.js'),
+  Input: require('./Input/index.js'),
+  RichTextEditor: require('./RichTextEditor/index.js'),
+  SignaturePad: require('./SignaturePad/index.js')
 };
