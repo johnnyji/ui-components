@@ -11,8 +11,8 @@ export default class RegularButtondDemo extends Component {
   render() {
     return (
       <div className={styles.main}>
-        <Button onClick={this._handleClick}>I am clickable!</Button>
-        <Button onClick={this._handleClick}>I am clickable!</Button>
+        <Button className={styles.button} onClick={this._handleClick}>I am clickable!</Button>
+        <Button className={styles.button} onClick={this._handleClick}>I am clickable!</Button>
       </div>
     );
   }
