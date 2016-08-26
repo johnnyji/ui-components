@@ -1,7 +1,8 @@
 import React, {Component, PropTypes} from 'react';
 import classNames from 'classnames';
 import debounce from 'lodash/debounce';
-import Clickable from '../Clickable';
+// Must import directly from component source, otherwise webpack throws error on prod
+import Clickable from '../Clickable/Clickable';
 import Pad from 'signature_pad';
 import styles from './SignaturePad.scss';
 
