@@ -1,4 +1,5 @@
 const autoprefixer = require('autoprefixer');
+const DashboardPlugin = require('webpack-dashboard/plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const path = require('path');
 
@@ -25,9 +26,9 @@ module.exports = {
     extensions: ['', '.js', '.json', '.scss']
   },
   plugins: [
+    new DashboardPlugin(),
     // Extracts all the styles into a single `style.css` file served at the `publicPath`
-    new ExtractTextPlugin('style.css', {allChunks: true}),
-
+    new ExtractTextPlugin('style.css', {allChunks: true})
   ],
   module: {
     loaders: [

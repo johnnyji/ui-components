@@ -11,6 +11,7 @@ export default class Button extends Component {
   static propTypes = {
     className: PropTypes.string,
     disabled: PropTypes.bool.isRequired,
+    name: PropTypes.string,
     onClick: PropTypes.func.isRequired
   };
 
@@ -19,7 +20,7 @@ export default class Button extends Component {
   };
   
   render() {
-    const {className, disabled} = this.props;
+    const {className, disabled, name} = this.props;
 
     const classes = classNames(
       className,
@@ -31,6 +32,7 @@ export default class Button extends Component {
       <button
         className={classes}
         disabled={disabled}
+        name={name}
         onClick={this._handleClick}>
         {this.props.children}
       </button>
@@ -39,7 +41,7 @@ export default class Button extends Component {
 
   _handleClick = () => {
     if (!this.props.disabled) {
-      this.props.onClick();
+      this.props.onClick(this.props.name);
     }
   }
 
