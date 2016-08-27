@@ -1,23 +1,30 @@
+/* eslint-disable prefer-template */
 const autoprefixer = require('autoprefixer');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const components = require('../src/components');
 const path = require('path');
+const webpack = require('webpack');
 
 const ROOT = path.join(__dirname, './../');
 const SRC = path.join(ROOT, 'src');
-const PRESETS = ['es2015', 'stage-0', 'react', 'react-hmre'];
+const PRESETS = ['es2015', 'stage-0', 'react'];
 const PLUGINS = ['transform-decorators-legacy'];
+// All the webpack entries for every component
+const COMPONENTS_ENTRY = components.reduce((accum, component) => {
+  const entryPath = {};
+  entryPath[component] = path.join(SRC, './' + component + '/index.js');
+  return Object.assign({}, accum, entryPath);
+}, {});
 
 module.exports = {
-  entry: {
-    'Button.js': path.join(SRC, './Button/index.js')
-  },
+  devtool: 'cheap-module-source-map',
+  entry: COMPONENTS_ENTRY,
   output: {
     // `[name]` makes sure that every key in the webpack config's `entry` becomes
     // a seperate file in the output, with the name of the file being the key name,
     // See: http://stackoverflow.com/questions/31907672/how-to-set-multiple-file-entry-and-output-in-project-with-webpack
     filename: '[name]',
     // This is where the assets are physically written on disk
-    path: path.join(ROOT, './output/'),
+    path: path.join(ROOT, './build/'),
     library: 'ui-components',
     libraryTarget: 'umd',
     externals: {
@@ -30,7 +37,15 @@ module.exports = {
   },
   plugins: [
     // Extracts all the styles into a single `style.css` file served at the `publicPath`
-    new ExtractTextPlugin('style.css', {allChunks: true})
+    new webpack.DefinePlugin({
+      'process.env': {
+        'NODE_ENV': JSON.stringify('production')
+      }
+    }),
+    // Deduplications dependency trees
+    new webpack.optimize.DedupePlugin(),
+    // Minifies JS
+    new webpack.optimize.UglifyJsPlugin()
   ],
   module: {
     loaders: [
@@ -46,7 +61,7 @@ module.exports = {
       }, {
         test: /.scss$/,
         include: [SRC],
-        loader: ExtractTextPlugin.extract('style', 'css?modules!postcss!sass')
+        loader: 'style!css?modules!postcss!sass'
       }, {
         test: /\.css$/,
         include: [SRC],
@@ -56,3 +71,4 @@ module.exports = {
     postcss: [autoprefixer]
   }
 };
+/* eslint-enable prefer-template */
