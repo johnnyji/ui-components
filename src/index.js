@@ -5,6 +5,7 @@ import React from 'react';
 import App from './App';
 import Button from './Button/demo/index';
 import Clickable from './Clickable/demo/index';
+import Folder from './Folder/demo/index';
 import ComponentsListing from './ComponentsListing';
 import Demo from './Demo';
 import Input from './Input/demo/index';
@@ -19,6 +20,7 @@ const routes = (
       <Route component={Demo} path='components'>
         <Route component={Button} path='Button' />
         <Route component={Clickable} path='Clickable' />
+        <Route component={Folder} path='Folder' />
         <Route component={Input} path='Input' />
         <Route component={RichTextEditor} path='RichTextEditor' />
         <Route component={SignaturePad} path='SignaturePad' />

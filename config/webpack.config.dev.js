@@ -42,10 +42,6 @@ module.exports = {
           plugins: PLUGINS
         }
       }, {
-        test: /.html$/,
-        include: [SRC],
-        loader: 'html'
-      }, {
         test: /.scss$/,
         include: [SRC],
         loader: ExtractTextPlugin.extract('style', 'css?modules!postcss!sass')

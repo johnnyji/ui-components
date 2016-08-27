@@ -8,7 +8,8 @@ const ROOT = path.join(__dirname, './../');
 const SRC = path.join(ROOT, 'src');
 const PRESETS = ['es2015', 'stage-0', 'react'];
 const PLUGINS = ['transform-decorators-legacy'];
-// All the webpack entries for every component
+
+// Entry points for every component
 const COMPONENTS_ENTRY = components.reduce((accum, component) => {
   const entryPath = {};
   entryPath[component] = path.join(SRC, './' + component + '/index.js');

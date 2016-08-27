@@ -4,7 +4,7 @@ import pureRender from 'pure-render-decorator';
 import styles from './index.scss';
 
 @pureRender
-export default class RegularButtondDemo extends Component {
+export default class RegularButtonDemo extends Component {
 
   static displayName = 'RegularButtonDemo';
   

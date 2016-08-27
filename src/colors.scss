@@ -1,5 +1,6 @@
-$blue: #2980B9;
-$blue-light: #3498DB;
+$blue: #4E9CC2;
+$blue-light: #75B8D8;
+$blue-lighter: #A9D6EC;
 $white: #FFF;
 $gray: darken(#DADFE1, 5%);
 $gray-light: #DADFE1;
@@ -7,6 +8,7 @@ $gray-dark: #62676A;
 
 $brand: $blue;
 $brand-light: $blue-light;
+$brand-lighter: $blue-lighter;
 $error: #CF000F;
 $disabled: darken($gray, 5%);
 $hover: #F9690E;

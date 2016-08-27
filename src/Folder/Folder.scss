@@ -1,0 +1,43 @@
+@import '../colors.scss';
+
+$folder-main: $blue-light;
+$folder-secondary: $blue-lighter;
+
+.main {
+  display: flex;
+  flex-direction: column;
+}
+
+.tab {
+  height: 15%;
+  position: relative;
+
+  &Left, &Right {
+    @extend .box-shadow;
+    position: absolute;
+  }
+
+  &-left {
+    background-color: $folder-secondary;
+    left: 0;
+    height: 100%;
+    width: 58%;
+  }
+  &-right {
+    background-color: $folder-main;
+    bottom: 0;
+    right: 0;
+    height: 70%;
+    width: 53%;
+  }
+
+}
+
+.content {
+  background-color: $folder-main;
+  box-shadow: 0 4px 8px 0 rgba(87, 71, 81, 0.2);  
+  height: 85%;
+  padding: 8px;
+  width: 100%;
+  z-index: 1;
+}
