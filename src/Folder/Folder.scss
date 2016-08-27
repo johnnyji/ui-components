@@ -1,4 +1,5 @@
 @import '../colors.scss';
+@import '../extends.scss';
 
 $folder-main: $blue-light;
 $folder-secondary: $blue-lighter;
@@ -6,6 +7,9 @@ $folder-secondary: $blue-lighter;
 .main {
   display: flex;
   flex-direction: column;
+  height: 150px;
+  position: relative;
+  width: 200px;
 }
 
 .tab {
@@ -13,17 +17,17 @@ $folder-secondary: $blue-lighter;
   position: relative;
 
   &Left, &Right {
-    @extend .box-shadow;
+    box-shadow: 0 4px 8px 0 rgba(87, 71, 81, 0.2);  
     position: absolute;
   }
 
-  &-left {
+  &Left {
     background-color: $folder-secondary;
     left: 0;
     height: 100%;
     width: 58%;
   }
-  &-right {
+  &Right {
     background-color: $folder-main;
     bottom: 0;
     right: 0;
@@ -38,6 +42,6 @@ $folder-secondary: $blue-lighter;
   box-shadow: 0 4px 8px 0 rgba(87, 71, 81, 0.2);  
   height: 85%;
   padding: 8px;
-  width: 100%;
+  position: relative;
   z-index: 1;
 }

@@ -11,7 +11,9 @@ export default class RegularFolderDemo extends Component {
   render() {
     return (
       <div className={styles.main}>
-        <Folder>I am folder!</Folder>
+        <Folder>
+          <span className={styles.folderContent}>I am folder!</span>
+        </Folder>
       </div>
     );
   }

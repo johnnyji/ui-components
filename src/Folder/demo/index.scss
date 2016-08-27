@@ -1,5 +1,15 @@
+@import '../../colors';
+
 .main {
   align-items: center;
   display: flex;
   flex-direction: column;
+}
+
+.folderContent {
+  color: $white;
+  left: 50%;
+  position: absolute;
+  top: 45%;
+  transform: translate(-50%, -50%);
 }
