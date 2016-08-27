@@ -1,0 +1,14 @@
+@import '../colors';
+
+.main {
+  height: 10px;
+  width: 100%;
+  position: relative;
+}
+
+.bar {
+  height: 100%;
+  transition: all 550ms ease;
+  &-blue { background-color: $blue }
+}
+

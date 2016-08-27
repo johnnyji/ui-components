@@ -3,14 +3,9 @@ import {render} from 'react-dom';
 import {Router, hashHistory, IndexRoute, Route} from 'react-router';
 import React from 'react';
 import App from './App';
-import Button from './Button/demo/index';
-import Clickable from './Clickable/demo/index';
-import Folder from './Folder/demo/index';
+import components from './components';
 import ComponentsListing from './ComponentsListing';
 import Demo from './Demo';
-import Input from './Input/demo/index';
-import RichTextEditor from './RichTextEditor/demo/index';
-import SignaturePad from './SignaturePad/demo/index';
 
 // Have to use hashHistory due to no server
 const routes = (
@@ -18,12 +13,15 @@ const routes = (
     <Route component={App} path='/'>
       <IndexRoute component={ComponentsListing} />
       <Route component={Demo} path='components'>
-        <Route component={Button} path='Button' />
-        <Route component={Clickable} path='Clickable' />
-        <Route component={Folder} path='Folder' />
-        <Route component={Input} path='Input' />
-        <Route component={RichTextEditor} path='RichTextEditor' />
-        <Route component={SignaturePad} path='SignaturePad' />
+        {components.map((c, i) => {
+          const component = require(`./${c}/demo/index.js`);
+          return (
+            <Route
+              component={component.default || component}
+              key={i}
+              path={c} />
+          );
+        })}
       </Route>
     </Route>
   </Router>

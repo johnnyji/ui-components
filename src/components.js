@@ -3,6 +3,7 @@ module.exports = [
   'Clickable',
   'Folder',
   'Input',
+  'ProgressBar',
   'RichTextEditor',
   'SignaturePad'
 ];
