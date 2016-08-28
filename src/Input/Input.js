@@ -30,6 +30,7 @@ export default class Input extends Component {
       PropTypes.string
     ]).isRequired,
     labelIcon: PropTypes.string,
+    name: PropTypes.string,
     onEnterKeyPress: PropTypes.func,
     onUpdate: PropTypes.func.isRequired,
     patternMatches: PropTypes.oneOfType([
@@ -205,7 +206,7 @@ export default class Input extends Component {
     // If the input value doesn't match the regex we passed in, we're going to trigger an error callback
     const error = this._getError(value) || null;
     // Updates the parent component with both the value and the error
-    this.props.onUpdate(value, error);
+    this.props.onUpdate(value, error, this.props.name);
   };
 
 }
