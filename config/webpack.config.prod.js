@@ -12,7 +12,7 @@ const PLUGINS = ['transform-decorators-legacy'];
 // Entry points for every component
 const COMPONENTS_ENTRY = components.reduce((accum, component) => {
   const entryPath = {};
-  entryPath[component] = path.join(SRC, './' + component + '/index.js');
+  entryPath[component + '.js'] = path.join(SRC, './' + component + '/index.js');
   return Object.assign({}, accum, entryPath);
 }, {});
 
