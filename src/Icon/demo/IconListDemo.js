@@ -21,6 +21,7 @@ export default class IconListDemo extends Component {
     return icons
       .keySeq()
       .toArray()
+      .sort()
       .map((name, i) => (
         <div className={styles.iconWrapper} key={i}>
           <Icon className={styles.icon} name={name} />
