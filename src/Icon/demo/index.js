@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import DemoView from '../../demo/index';
-import IconListDemo from './IconListDemo';
+import ColoredIconsDemo from './ColoredIconsDemo';
+import RegularIconsDemo from './RegularIconsDemo';
 import pureRender from 'pure-render-decorator';
 
 @pureRender
@@ -10,7 +11,8 @@ export default class IconDemo extends Component {
 
   render () {
     const demos = [
-      {title: 'Icon List', component: IconListDemo}
+      {title: 'Regular Icons', component: RegularIconsDemo},
+      {title: 'Colored Icons', component: ColoredIconsDemo}
     ];
 
     return (
