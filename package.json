@@ -1,7 +1,7 @@
 {
   "name": "ui-components",
-  "version": "1.1.0",
-  "description": "A collection of UI components",
+  "version": "0.0.1",
+  "description": "A collection of React UI components",
   "main": "index.js",
   "scripts": {
     "build:clean": "rimraf ./build",
