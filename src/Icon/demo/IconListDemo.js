@@ -19,11 +19,11 @@ export default class IconListDemo extends Component {
 
   _renderIcons = () => {
     return icons
-      .toKeySeq()
-      .keys()
+      .keySeq()
+      .toArray()
       .map((name, i) => (
-        <div key={i}>
-          <Icon name={name} />
+        <div className={styles.iconWrapper} key={i}>
+          <Icon className={styles.icon} name={name} />
           {name}
         </div>
       ));

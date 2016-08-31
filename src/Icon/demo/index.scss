@@ -1,9 +1,12 @@
 .main {
-  align-items: center;
   display: flex;
   flex-direction: column;
 }
 
-.button {
+.iconWrapper {
   margin: 8px;
+}
+
+.icon {
+  margin-right: 8px;
 }

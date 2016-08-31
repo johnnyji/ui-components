@@ -2,7 +2,7 @@ import React, {Component, PropTypes} from 'react';
 import pureRender from 'pure-render-decorator';
 import icons from './icons';
 
-const ICON_NAMES = icons.toKeySeq().keys();
+const ICON_NAMES = icons.keySeq().toArray();
 
 @pureRender
 export default class Icon extends Component {
@@ -10,7 +10,8 @@ export default class Icon extends Component {
   static displayName = 'Icon';
 
   static propTypes = {
-    name: PropTypes.oneOf([ICON_NAMES]).isRequired,
+    className: PropTypes.string,
+    name: PropTypes.oneOf(ICON_NAMES).isRequired,
     size: PropTypes.number.isRequired,
     style: React.PropTypes.object
   };
@@ -31,7 +32,11 @@ export default class Icon extends Component {
     if (!icon) return null;
 
     return (
-      <svg viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet" fit style={styles}>
+      <svg
+        className={this.props.className}
+        preserveAspectRatio='xMidYMid meet'
+        style={styles}
+        viewBox='0 0 24 24'>
         {icon}
       </svg>
     );
