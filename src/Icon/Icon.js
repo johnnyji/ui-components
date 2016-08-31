@@ -13,7 +13,7 @@ export default class Icon extends Component {
     className: PropTypes.string,
     name: PropTypes.oneOf(ICON_NAMES).isRequired,
     size: PropTypes.number.isRequired,
-    style: React.PropTypes.object
+    style: PropTypes.object
   };
 
   static defaultProps = {
@@ -21,15 +21,16 @@ export default class Icon extends Component {
   };
 
   render() {
+    const icon = icons.get(this.props.name);
+
+    if (!icon) return null;
+
     const styles = Object.assign({}, this.props.style, {
       fill: 'currentcolor',
       verticalAlign: 'middle',
       width: this.props.size, // CSS instead of the width attr to support non-pixel units
       height: this.props.size // Prevents scaling issue in IE
     });
-    const icon = icons.get(this.props.name);
-
-    if (!icon) return null;
 
     return (
       <svg
