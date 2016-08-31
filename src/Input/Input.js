@@ -74,16 +74,18 @@ export default class Input extends Component {
       type,
       value
     } = this.props;
+    const shouldRenderError = this._shouldRenderError();
     const inputLabel = labelIcon ? <span>{labelIcon}{label}</span> : label;
     const inputClasses = classNames(
       styles.input,
       inputClassName,
-      disabled ? styles.disabled : null
+      disabled ? styles.disabled : null,
+      shouldRenderError ? styles[errorType] : null
     );
 
     return (
       <div className={classNames(className, styles.main)}>
-        {required && <span className={styles.requiredAsterisk}>*</span>}
+        {!disabled && required && <span className={styles.requiredAsterisk}>*</span>}
         <input
           autoFocus={autoFocus}
           className={inputClasses}
@@ -95,7 +97,7 @@ export default class Input extends Component {
           onFocus={this._handleFocus}
           type={type}
           value={value} />
-        {this._shouldRenderError() && <InputError error={error} type={errorType} />}
+        {!disabled && shouldRenderError && <InputError error={error} type={errorType} />}
       </div>
     );
   }
@@ -121,11 +123,11 @@ export default class Input extends Component {
     const {shouldDislayError} = this.state;
 
     // No error
-    if (!error) return null;
+    if (!error) return false;
     // Error and we need to display it
-    if (displayError || shouldDislayError) return error;
+    if (displayError || shouldDislayError) return true;
     // Error but no need to display it
-    return null;
+    return false;
   };
 
   /**
