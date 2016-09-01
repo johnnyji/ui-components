@@ -1,9 +1,8 @@
-import ImmutablePropTypes from 'react-immutable-proptypes';
 import {PropTypes} from 'react';
 
 export default {
 
-  errorMatcher: ImmutablePropTypes.mapContains({
+  errorMatcher: PropTypes.shape({
     error: PropTypes.string.isRequired,
     validator: PropTypes.func.isRequired
   })

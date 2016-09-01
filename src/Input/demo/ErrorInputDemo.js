@@ -16,7 +16,7 @@ export default class ErrorInputDemo extends Component {
   }
 
   render() {
-    const patternMatcher = Immutable.fromJS([
+    const patternMatcher = Immutable.List([
       validators.minMaxLength(3, 10,
         'Must be between 3 and 10 characters. This is also a super long error to show how it would wrap.'),
       validators.noLowerCase()

@@ -9,7 +9,6 @@ import styles from './Input.scss';
 
 // Key code for the Enter key
 const ENTER = 13;
-const RETURN_TRUE = () => true;
 
 @pureRender
 export default class Input extends Component {
@@ -36,7 +35,7 @@ export default class Input extends Component {
     patternMatches: PropTypes.oneOfType([
       ImmutablePropTypes.listOf(CustomPropTypes.errorMatcher),
       CustomPropTypes.errorMatcher
-    ]).isRequired,
+    ]),
     required: PropTypes.bool.isRequired,
     type: PropTypes.oneOf(['text', 'email', 'number', 'password']),
     value: PropTypes.string.isRequired,
@@ -48,10 +47,6 @@ export default class Input extends Component {
     displayError: false,
     displayErrorOn: 'blur',
     errorType: 'error',
-    patternMatches: Immutable.Map({
-      error: '',
-      validator: RETURN_TRUE
-    }),
     required: false,
     type: 'text'
   };
@@ -145,13 +140,13 @@ export default class Input extends Component {
       // Goes through all the validators and returns the first the error of the
       // first pattern that the value doesn't match
       const errorMatch = patternMatches.find((pattern) => {
-        if (!pattern.get('validator')(value)) return pattern.get('error');
+        if (!pattern.validator(value)) return pattern.error;
       });
-      return errorMatch === undefined ? null : errorMatch.get('error');
+      return errorMatch === undefined ? null : errorMatch.error;
     }
 
     // Checks the validity of the value against the pattern, and returns an error if no match
-    return patternMatches.get('validator')(value) ? null : patternMatches.get('error');
+    return patternMatches.validator(value) ? null : patternMatches.error;
   };
 
   /**

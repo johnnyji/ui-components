@@ -5,7 +5,7 @@ export default {
   email(error) {
     return {
       error: error || 'Please enter a valid email address.',
-      validator: isEmail
+      validator: (value = '') => isEmail(value)
     };
   },
 
