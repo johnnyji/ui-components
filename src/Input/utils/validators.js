@@ -12,7 +12,7 @@ export default {
   matchValue(valueToMatch, error) {
     return {
       error: error || `Value must match: ${valueToMatch}.`,
-      validator: (value = '') => (new RegExp(`^${valueToMatch}$`)).test(value)
+      validator: (value = '') => value === valueToMatch
     };
   },
 
