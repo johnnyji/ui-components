@@ -31,28 +31,28 @@ export default class Tooltip extends Component {
   constructor (props) {
     super(props);
     this.state = {
-      placement: this._getPlacement(),
+      placement: props.placement,
       shown: false,
       tooltipStyles: {}
     };
   }
 
   componentDidMount () {
-    const {triggers} = this.props;
+    // const {triggers} = this.props;
     const anchor = findDOMNode(this);
     window.addEventListener('resize', this._debounceResize);
 
     // TODO: We don't know if at any given point if the triggers
     // change. How can we ensure we're removing all event listeners
     // on unmount?
-    if (triggers.includes('hover')) {
-      anchor.addEventListener('mouseenter', this._showTooltip);
-      anchor.addEventListener('mouseleave', this._hideTooltip);
-    }
+    // if (triggers.includes('hover')) {
+    //   anchor.addEventListener('mouseenter', this._showTooltip);
+    //   anchor.addEventListener('mouseleave', this._hideTooltip);
+    // }
 
-    if (triggers.includes('click')) {
-      anchor.addEventListener('click', this._toggleTooltip);
-    }
+    // if (triggers.includes('click')) {
+    //   anchor.addEventListener('click', this._toggleTooltip);
+    // }
   }
 
   componentWillReceiveProps (nextProps) {
@@ -62,7 +62,7 @@ export default class Tooltip extends Component {
       nextProps.children !== this.props.children ||
       nextProps.placement !== this.props.placement
     ) {
-      const placement = this._getPlacement(nextProps);
+      const placement = this._getValidPlacement(nextProps.placement);
 
       this.setState({
         placement,
@@ -76,8 +76,14 @@ export default class Tooltip extends Component {
     // and width, meaning we need to immediately recalculate it's
     // position to a more accurate one than what we original estimated
     // with `_calculateInitPosition`
-    if (!prevState.shown && this.state.shown) {
-      const placement = this._getPlacement();
+    //
+    // When the user changes the placement prop while the tooltip is shown,
+    // we need to adjust the new position given the new placement
+    if (
+      !prevState.shown && this.state.shown ||
+      ((prevState.placement !== this.state.placement) && this.state.shown)
+    ) {
+      const placement = this._getValidPlacement(this.state.placement);
 
       this.setState({
         placement,
@@ -92,10 +98,15 @@ export default class Tooltip extends Component {
 
   render () {
     const {shown, tooltipStyles} = this.state;
-    const {children, className, tooltip} = this.props;
+    const {children, className, tooltip, triggers} = this.props;
+
+    const tooltipTriggers = {
+      ...(triggers.includes('hover') ? {onMouseEnter: this._showTooltip, onMouseLeave: this._hideTooltip} : {}),
+      ...(triggers.includes('click') ? {onClick: this._toggleTooltip} : {})
+    };
 
     return (
-      <div className={classNames(styles.main, className)}>
+      <div className={classNames(styles.main, className)} {...tooltipTriggers}>
         {children}
         {shown && React.cloneElement(tooltip, {
           ref: 'tooltip',
@@ -204,7 +215,7 @@ export default class Tooltip extends Component {
   _debounceResize = () => debounce(this._handlePlacementUpdate, 10);
 
   _handlePlacementUpdate = () => {
-    this.setState({placement: this._getPlacement()});
+    this.setState({placement: this._getValidPlacement(this.state.placement)});
   };
 
   _hideTooltip = () => {
@@ -232,15 +243,15 @@ export default class Tooltip extends Component {
 
   /**
    * Generates a valid placement by detecting potential browser edges
+   * @param {String} defaultPlacement - The placement to default to if no valid one is detected
    * @return {String} - The valid placement
    */
-  _getPlacement = (props = this.props) => {
-    const {placement} = props;
+  _getValidPlacement = (defaultPlacement) => {
     const {tooltip} = this.refs;
 
     // If theres no tooltip, we can't edge detect, therefore just return the user's provided
     // placement
-    if (!this.refs.tooltip) return placement;
+    if (!this.refs.tooltip) return defaultPlacement;
 
     const {bottom, left, right, top, width} = findDOMNode(tooltip).getBoundingClientRect();
     const bottomTouching = bottom >= window.innerHeight;
@@ -257,7 +268,9 @@ export default class Tooltip extends Component {
     const validPlacements = ['top', 'left', 'bottom', 'right'].filter((p) => !invalidPlacements.includes(p));
 
     // If there is no valid placements or the user's placement is valid, we just use the user's placement
-    if (!validPlacements.length || (validPlacements.length && validPlacements.includes(placement))) return placement;
+    if (!validPlacements.length || (validPlacements.length && validPlacements.includes(defaultPlacement))) {
+      return defaultPlacement;
+    }
 
     // If the users placement is invalid, we use the first valid placement
     return validPlacements[0];
