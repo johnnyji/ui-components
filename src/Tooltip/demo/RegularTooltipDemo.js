@@ -23,7 +23,7 @@ export default class RegularTooltipDemo extends Component {
         </header>
         <main>
           <Tooltip
-            tooltip={<div>Woooahahh dude</div>}
+            tooltip={<div>Hello! My name is Elder Price!</div>}
             placement={this.state.placement}
             triggers={Immutable.List(['click'])}>
             <Button>Hover me for a tooltip!</Button>

@@ -39,7 +39,7 @@ export default class Tooltip extends Component {
 
   componentDidMount () {
     // const {triggers} = this.props;
-    const anchor = findDOMNode(this);
+    // const anchor = findDOMNode(this);
     window.addEventListener('resize', this._debounceResize);
 
     // TODO: We don't know if at any given point if the triggers
@@ -181,23 +181,20 @@ export default class Tooltip extends Component {
    * @return {Object} - The new position/styles
    */
   _adjustTooltipPosition = (placement = this.state.placement) => {
-    const {left, top} = findDOMNode(this.refs.tooltip).getBoundingClientRect();
-    const {height: anchorHeight, width: anchorWidth} = findDOMNode(this).getBoundingClientRect();
+    const {height, left, top, width} = findDOMNode(this.refs.tooltip).getBoundingClientRect();
     const styles = {};
 
     switch (placement) {
       case 'top':
       case 'bottom': {
-        // We offset the left of the tooltip a quarter width of the
-        // anchors width, which will horizontally center the tooltip to the anchor
-        styles.left = left - (anchorWidth / 4);
+        // Shifts the tooltips weight origin X to the center, thus centering it horizontally
+        styles.left = left - (width / 2);
         break;
       }
       case 'left':
       case 'right': {
-        // We offset the top of the tooltip a quarter height of the
-        // anchors height, which will vertically center the tooltip to the anchor
-        styles.top = top - (anchorHeight / 4);
+        // Shifts the tooltips weight origin Y to the center, thus centering it vertically
+        styles.top = top - (height / 2);
         break;
       }
       default: {
