@@ -15,7 +15,6 @@ export default class RegularTooltipDemo extends Component {
   };
   
   render() {
-    console.log(this.state.placement);
     return (
       <div className={styles.main}>
         <header className={styles.header}>
