@@ -7,6 +7,8 @@ import ImmutablePropTypes from 'react-immutable-proptypes';
 import pureRender from 'pure-render-decorator';
 import styles from './Tooltip.scss';
 
+const PLACEMENTS = ['top', 'right', 'bottom', 'left'];
+
 @pureRender
 export default class Tooltip extends Component {
 
@@ -14,7 +16,7 @@ export default class Tooltip extends Component {
 
   static propTypes = {
     className: PropTypes.string,
-    placement: PropTypes.oneOf(['top', 'right', 'bottom', 'left']).isRequired,
+    placement: PropTypes.oneOf(PLACEMENTS).isRequired,
     tooltip: PropTypes.element.isRequired,
     tooltipSpacing: PropTypes.number.isRequired,
     triggers: ImmutablePropTypes.listOf(
@@ -83,11 +85,9 @@ export default class Tooltip extends Component {
       !prevState.shown && this.state.shown ||
       ((prevState.placement !== this.state.placement) && this.state.shown)
     ) {
-      const placement = this._getValidPlacement(this.state.placement);
-
       this.setState({
-        placement,
-        tooltipStyles: this._adjustTooltipPosition(placement)
+        placement: this.state.placement,
+        tooltipStyles: this._adjustTooltipPosition(this.state.placement)
       });
     }
   }
@@ -184,6 +184,7 @@ export default class Tooltip extends Component {
     const {height, left, top, width} = findDOMNode(this.refs.tooltip).getBoundingClientRect();
     const styles = {};
 
+    console.log('Adjust: ', placement);
     switch (placement) {
       case 'top':
       case 'bottom': {
@@ -265,7 +266,12 @@ export default class Tooltip extends Component {
     const validPlacements = ['top', 'left', 'bottom', 'right'].filter((p) => !invalidPlacements.includes(p));
 
     // If there is no valid placements or the user's placement is valid, we just use the user's placement
-    if (!validPlacements.length || (validPlacements.length && validPlacements.includes(defaultPlacement))) {
+    if (
+      !validPlacements.length ||
+      validPlacements.length === PLACEMENTS.length ||
+      validPlacements.includes(defaultPlacement)
+    ) {
+      console.log('Default Placements');
       return defaultPlacement;
     }
 
