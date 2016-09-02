@@ -9,6 +9,8 @@ import styles from './Tooltip.scss';
 
 const PLACEMENTS = ['top', 'right', 'bottom', 'left'];
 
+// TODO: UPDATE COMMENTS!
+
 @pureRender
 export default class Tooltip extends Component {
 
@@ -58,36 +60,28 @@ export default class Tooltip extends Component {
   }
 
   componentWillReceiveProps (nextProps) {
-    // If the anchor or placement changes, we have to
-    // recalculate the placement and position
-    if (
-      nextProps.children !== this.props.children ||
-      nextProps.placement !== this.props.placement
-    ) {
+    // If the placement changes, we need to update the state
+    if (nextProps.placement !== this.props.placement) {
       const placement = this._getValidPlacement(nextProps.placement);
-
-      this.setState({
-        placement,
-        tooltipStyles: this._calculateInitPosition(placement)
-      });
+      this.setState({placement});
     }
   }
 
-  componentDidUpdate (_, prevState) {
+  componentDidUpdate (prevProps, prevState) {
     // When the tooltip is shown, we have access to it's height
     // and width, meaning we need to immediately recalculate it's
     // position to a more accurate one than what we original estimated
-    // with `_calculateInitPosition`
+    // with `_calculatePosition`
     //
     // When the user changes the placement prop while the tooltip is shown,
     // we need to adjust the new position given the new placement
     if (
+      prevProps.children !== this.props.children ||
       !prevState.shown && this.state.shown ||
       ((prevState.placement !== this.state.placement) && this.state.shown)
     ) {
       this.setState({
-        placement: this.state.placement,
-        tooltipStyles: this._adjustTooltipPosition(this.state.placement)
+        tooltipStyles: this._calculatePosition(this.state.placement)
       });
     }
   }
@@ -122,7 +116,7 @@ export default class Tooltip extends Component {
    * @param {String} placement - The directional placement of the tooltip
    * @return {Object} - The tooltip position/style
    */
-  _calculateInitPosition = (placement = this.state.placement) => {
+  _calculatePosition = (placement = this.state.placement) => {
     const {tooltipSpacing} = this.props;
 
     const anchor = findDOMNode(this);
@@ -167,35 +161,44 @@ export default class Tooltip extends Component {
       }
     }
 
-    return {
+    const estimatedPosition = {
       ...(tooltipLeft ? {left: tooltipLeft} : {}),
       ...(tooltipBottom ? {bottom: tooltipBottom} : {}),
       ...(tooltipTop ? {top: tooltipTop} : {}),
       ...(tooltipRight ? {right: tooltipRight} : {})
     };
-  };
 
-  /**
-   * After the tooltip is rendered, we want to adjust it's estimated position to a fully
-   * calculated position, which is now possible because we have it's height and width post rendering
-   * @return {Object} - The new position/styles
-   */
-  _adjustTooltipPosition = (placement = this.state.placement) => {
-    const {height, left, top, width} = findDOMNode(this.refs.tooltip).getBoundingClientRect();
-    const styles = {};
+    // If there's a tooltip rendered, we can generate the most accurate
+    // position instead of just estimating, if not we just return the estimated
+    // position
+    const tooltip = findDOMNode(this.refs.tooltip);
+    if (!tooltip) return estimatedPosition;
 
-    console.log('Adjust: ', placement);
+    const {
+      height: tHeight,
+      width: tWidth
+    } = tooltip.getBoundingClientRect();
+
+    // The tooltip element will have a different `left` and `top` position
+    // than the one we already estimated if it's currently mounted. Therefore
+    // we need to use the positions from our `estimatedPosition` instead of
+    // the ones we extract from the tooltip node
+    const tLeft = estimatedPosition.left || estimatedPosition.right - tWidth;
+    const tTop = estimatedPosition.top || estimatedPosition.bottom - tHeight;
+
+    const accuratePosition = {};
+
     switch (placement) {
       case 'top':
       case 'bottom': {
         // Shifts the tooltips weight origin X to the center, thus centering it horizontally
-        styles.left = left - (width / 2);
+        accuratePosition.left = tLeft - (tWidth / 2);
         break;
       }
       case 'left':
       case 'right': {
         // Shifts the tooltips weight origin Y to the center, thus centering it vertically
-        styles.top = top - (height / 2);
+        accuratePosition.top = tTop - (tHeight / 2);
         break;
       }
       default: {
@@ -203,7 +206,8 @@ export default class Tooltip extends Component {
       }
     }
 
-    return Object.assign({}, this.state.tooltipStyles, styles);
+    // Returns the fully accurate styles
+    return Object.assign({}, estimatedPosition, accuratePosition);
   };
 
   /**
@@ -226,7 +230,7 @@ export default class Tooltip extends Component {
   _showTooltip = () => {
     this.setState({
       shown: true,
-      tooltipStyles: this._calculateInitPosition()
+      tooltipStyles: this._calculatePosition()
     });
   };
 
@@ -271,7 +275,6 @@ export default class Tooltip extends Component {
       validPlacements.length === PLACEMENTS.length ||
       validPlacements.includes(defaultPlacement)
     ) {
-      console.log('Default Placements');
       return defaultPlacement;
     }
 
