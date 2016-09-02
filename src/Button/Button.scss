@@ -9,6 +9,11 @@
   padding: 6px 12px;
 }
 
+.active {
+  color: $white;
+  background-color: $brand;
+}
+
 .disabled {
   color: $disabled;
   border-color: $disabled;

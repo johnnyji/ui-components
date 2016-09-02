@@ -9,10 +9,11 @@ export default class Button extends Component {
   static displayName = 'Button';
 
   static propTypes = {
+    active: PropTypes.bool,
     className: PropTypes.string,
     disabled: PropTypes.bool.isRequired,
     name: PropTypes.string,
-    onClick: PropTypes.func.isRequired
+    onClick: PropTypes.func
   };
 
   static defaultProps = {
@@ -20,12 +21,13 @@ export default class Button extends Component {
   };
   
   render() {
-    const {className, disabled, name} = this.props;
+    const {active, className, disabled, name} = this.props;
 
     const classes = classNames(
       className,
       styles.main,
-      disabled ? styles.disabled : null
+      {[styles.active]: active && !disabled},
+      {[styles.disabled]: disabled}
     );
 
     return (
@@ -40,7 +42,7 @@ export default class Button extends Component {
   }
 
   _handleClick = () => {
-    if (!this.props.disabled) {
+    if (this.props.onClick && !this.props.disabled) {
       this.props.onClick(this.props.name);
     }
   }

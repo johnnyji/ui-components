@@ -4,17 +4,17 @@ import pureRender from 'pure-render-decorator';
 import styles from './index.scss';
 
 @pureRender
-export default class DisabledButtonDemo extends Component {
+export default class ActiveButtonDemo extends Component {
 
-  static displayName = 'DisabledButtonDemo';
+  static displayName = 'ActiveButtonDemo';
   
   render() {
     return (
       <div className={styles.main}>
         <Button
-          disabled={true}
+          active={true}
           onClick={() => {}}>
-          Disabled Button
+          Active Button
         </Button>
       </div>
     );
