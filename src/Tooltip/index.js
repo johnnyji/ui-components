@@ -1,1 +1,2 @@
-export default from './Tooltip';
+export Tooltip from './Tooltip';
+export TooltipAnchor from './TooltipAnchor';

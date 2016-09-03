@@ -1,9 +1,23 @@
 import React, {Component} from 'react';
-import Button from '../../Button/Button.js';
+import Button from '../../Button/Button';
 import Immutable from 'immutable';
+import Icon from '../../Icon/Icon';
 import Tooltip from '../Tooltip';
+import TooltipAnchor from '../TooltipAnchor';
+import {PLACEMENTS} from '../config';
 import pureRender from 'pure-render-decorator';
 import styles from './index.scss';
+
+const tooltip1 = (
+  <Tooltip>I'm some tooltip giving you info!</Tooltip>
+);
+
+const tooltip2 = (
+  <Tooltip>
+    <Icon name='alert' />
+    Oh shit! You did something wrong
+  </Tooltip>
+);
 
 @pureRender
 export default class RegularTooltipDemo extends Component {
@@ -20,26 +34,26 @@ export default class RegularTooltipDemo extends Component {
         <header className={styles.header}>
           {this._renderPlacements()}
         </header>
-        <main>
-          <Tooltip
-            tooltip={<div>Hello! My name is Elder Price!</div>}
+        <main className={styles.content}>
+          <TooltipAnchor
+            tooltip={tooltip1}
+            placement={this.state.placement}
+            triggers={Immutable.List(['hover'])}>
+            <Button>Hover me for a tooltip!</Button>
+          </TooltipAnchor>
+          <TooltipAnchor
+            tooltip={tooltip2}
             placement={this.state.placement}
             triggers={Immutable.List(['click'])}>
-            <Button>Hover me for a tooltip!</Button>
-          </Tooltip>
-          <Tooltip
-            tooltip={<div>Hello! My name is Elder Green!</div>}
-            placement={this.state.placement}
-            triggers={Immutable.List(['click'])}>
-            <Button>Hover me for a tooltip!</Button>
-          </Tooltip>
+            <Button>Click me for a tooltip!</Button>
+          </TooltipAnchor>
         </main>
       </div>
     );
   }
 
   _renderPlacements = () => {
-    return ['top', 'right', 'bottom', 'left'].map((placement, i) => {
+    return PLACEMENTS.map((placement, i) => {
       return (
         <Button
           active={this.state.placement === placement}
