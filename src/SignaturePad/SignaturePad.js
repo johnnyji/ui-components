@@ -1,6 +1,5 @@
 import React, {Component, PropTypes} from 'react';
 import classNames from 'classnames';
-import debounce from 'lodash/debounce';
 // Must import directly from component source, otherwise webpack throws error on prod
 import Clickable from '../Clickable/Clickable';
 import Pad from 'signature_pad';
@@ -16,6 +15,7 @@ export default class SignaturePad extends Component {
     onClear: PropTypes.func,
     onSigning: PropTypes.func,
     onSubmit: PropTypes.func.isRequired,
+    placeholder: PropTypes.element,
     resetLabel: PropTypes.oneOfType([
       PropTypes.string,
       PropTypes.element
@@ -31,23 +31,45 @@ export default class SignaturePad extends Component {
     submitLabel: 'Submit'
   };
 
+  state = {
+    loaded: false,
+    showPlaceholder: true,
+    signing: false
+  };
+
   componentDidMount() {
-    window.addEventListener('onresize', this._debouncedSizeCanvas);
+    // window.addEventListener('resize', this._debouncedSizeCanvas);
 
     this._sizeCanvas();
     this.signaturePad = new Pad(this.refs.canvas);
+
+    // We need to track a loading state to make sure
+    // the signature pad instance is existant before we render content
+    this.setState({loaded: true});
   }
 
-  componentWillUnmount() {
-    window.removeEventListener('onresize', this._debouncedSizeCanvas);
-  }
+  // componentWillUnmount() {
+  //   window.removeEventListener('resize', this._debouncedSizeCanvas);
+  // }
 
   render() {
-    const {className, label, resetLabel, submitLabel} = this.props;
+    const {loaded, showPlaceholder, signing} = this.state;
+    const {className, label, placeholder, resetLabel, submitLabel} = this.props;
+    const shouldDisplayPlaceholder = loaded && this.signaturePad._isEmpty && !signing && placeholder && showPlaceholder;
 
     return (
       <div className={classNames(styles.main, className)}>
-        <div className={styles.pad} ref='canvasWrapper'>
+        <div
+          className={styles.pad}
+          onClick={this._hidePlaceholder}
+          onMouseEnter={this._hidePlaceholder}
+          onMouseLeave={this._showPlaceholder}
+          ref='canvasWrapper'>
+          {shouldDisplayPlaceholder &&
+            React.cloneElement(placeholder, {
+              className: classNames(placeholder.props.className, styles.placeholder)
+            })
+          }
           <canvas onMouseDown={this._handleSigning} ref='canvas'></canvas>
         </div>
         <footer className={styles.footer}>
@@ -63,13 +85,20 @@ export default class SignaturePad extends Component {
     );
   }
 
+  // _debouncedSizeCanvas = () => {
+  //   clearTimeout(this._onResize);
+  //   this._onResize = setTimeout(this._sizeCanvas, 10);
+  // };
+
   _handleClear = () => {
     this.signaturePad.clear();
     if (this.props.onClear) this.props.onClear();
+    this.setState({signing: false});
   };
 
   _handleSigning = () => {
     if (this.props.onSigning) this.props.onSigning();
+    this.setState({signing: true});
   };
 
   _handleSubmit = () => {
@@ -81,16 +110,22 @@ export default class SignaturePad extends Component {
     this.props.onSubmit(this.signaturePad.toDataURL());
   };
 
-  _debouncedSizeCanvas = () => debounce(this._sizeCanvas, 10);
+  _hidePlaceholder = () => {
+    this.setState({showPlaceholder: false});
+  };
+
+  _showPlaceholder = () => {
+    this.setState({showPlaceholder: true});
+  };
 
   _sizeCanvas = () => {
     const {canvas, canvasWrapper} = this.refs;
-    const wrapperDimensions = canvasWrapper.getBoundingClientRect();
+    const {height, width} = canvasWrapper.getBoundingClientRect();
 
     // Make sure the canvas the same dimensions as its wrapper.
     // `canvas` elements must have its dimensions set programmatically like so
-    canvas.height = wrapperDimensions.height;
-    canvas.width = wrapperDimensions.width;
+    canvas.height = height;
+    canvas.width = width;
   };
 
 }

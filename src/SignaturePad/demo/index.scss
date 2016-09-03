@@ -1,4 +1,18 @@
+@import '../../colors';
+
 .main {
   align-items: center;
   display: flex;
+}
+
+.placeholder {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  &Text {
+    color: $placeholder;
+  }
+
 }
