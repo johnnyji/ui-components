@@ -27,6 +27,12 @@ export default class RegularTooltipDemo extends Component {
             triggers={Immutable.List(['click'])}>
             <Button>Hover me for a tooltip!</Button>
           </Tooltip>
+          <Tooltip
+            tooltip={<div>Hello! My name is Elder Green!</div>}
+            placement={this.state.placement}
+            triggers={Immutable.List(['click'])}>
+            <Button>Hover me for a tooltip!</Button>
+          </Tooltip>
         </main>
       </div>
     );
