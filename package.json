@@ -1,6 +1,6 @@
 {
   "name": "ui-components",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "description": "A collection of React UI components",
   "main": "index.js",
   "scripts": {
