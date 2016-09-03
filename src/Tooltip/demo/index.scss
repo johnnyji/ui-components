@@ -12,4 +12,11 @@
 }
 
 .content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.anchor {
+  margin: 16px;
 }

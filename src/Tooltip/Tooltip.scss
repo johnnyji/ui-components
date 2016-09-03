@@ -1,6 +1,10 @@
+@import '../colors';
+
 .main {
+  background-color: $white;
   border: 1px solid black;
   padding: 8px;
   font-size: 12px;
   pointer-events: none;
+  z-index: 100;
 }

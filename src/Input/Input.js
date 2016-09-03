@@ -38,7 +38,10 @@ export default class Input extends Component {
     ]),
     required: PropTypes.bool.isRequired,
     type: PropTypes.oneOf(['text', 'email', 'number', 'password']),
-    value: PropTypes.string.isRequired,
+    value: PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.number
+    ]).isRequired,
   };
 
   static defaultProps = {
@@ -47,6 +50,7 @@ export default class Input extends Component {
     displayError: false,
     displayErrorOn: 'blur',
     errorType: 'error',
+    label: '',
     required: false,
     type: 'text'
   };

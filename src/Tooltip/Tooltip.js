@@ -9,10 +9,7 @@ export default class Tooltip extends Component {
   static displayName = 'Tooltip';
 
   static propTypes = {
-    className: PropTypes.string,
-    style: PropTypes.shape({
-      position: 'fixed'
-    }).isRequired
+    className: PropTypes.string
   };
 
   render() {

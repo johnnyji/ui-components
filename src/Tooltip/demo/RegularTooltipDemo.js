@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import Button from '../../Button/Button';
 import Immutable from 'immutable';
 import Icon from '../../Icon/Icon';
+import Input from '../../Input/Input';
 import Tooltip from '../Tooltip';
 import TooltipAnchor from '../TooltipAnchor';
 import {PLACEMENTS} from '../config';
@@ -25,24 +26,39 @@ export default class RegularTooltipDemo extends Component {
   static displayName = 'RegularTooltipDemo';
 
   state = {
-    placement: 'top'
+    placement: 'top',
+    tooltipSpacing: 8
   };
   
   render() {
     return (
       <div className={styles.main}>
         <header className={styles.header}>
-          {this._renderPlacements()}
+          <div>
+            <label>Placement: </label>
+            {this._renderPlacements()}
+          </div>
+          <div>
+            <label>Spacing between tooltip and anchor: </label>
+            <Input
+              onUpdate={this._updateTooltipSpacing}
+              type='number'
+              value={this.state.tooltipSpacing} />
+          </div>
         </header>
         <main className={styles.content}>
           <TooltipAnchor
+            className={styles.anchor}
             tooltip={tooltip1}
+            tooltipSpacing={parseInt(this.state.tooltipSpacing)}
             placement={this.state.placement}
             triggers={Immutable.List(['hover'])}>
             <Button>Hover me for a tooltip!</Button>
           </TooltipAnchor>
           <TooltipAnchor
+            className={styles.anchor}
             tooltip={tooltip2}
+            tooltipSpacing={parseInt(this.state.tooltipSpacing)}
             placement={this.state.placement}
             triggers={Immutable.List(['click'])}>
             <Button>Click me for a tooltip!</Button>
@@ -68,6 +84,12 @@ export default class RegularTooltipDemo extends Component {
 
   _handleSetPlacement = (placement) => {
     this.setState({placement});
+  };
+
+  _updateTooltipSpacing = (value) => {
+    this.setState({
+      tooltipSpacing: value === '' ? 0 : value
+    });
   };
 
 }
