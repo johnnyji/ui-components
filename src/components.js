@@ -7,5 +7,6 @@ module.exports = [
   'ProgressBar',
   'RichTextEditor',
   'SignaturePad',
+  'Spinner',
   'Tooltip'
 ];

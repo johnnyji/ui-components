@@ -66,6 +66,7 @@
     "react-immutable-proptypes": "^2.1.0",
     "react-keydown": "^1.6.2",
     "react-router": "^2.7.0",
+    "react-spinkit": "^1.1.11",
     "react-tabs": "^0.7.0",
     "signature_pad": "^1.5.3",
     "validator": "^5.6.0"
