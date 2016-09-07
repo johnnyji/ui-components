@@ -9,7 +9,9 @@ export default class RegularSpinnerDemo extends PureComponent {
   render() {
     return (
       <div className={styles.main}>
-        <Spinner />
+        <Spinner className={styles.spinner} size='small' />
+        <Spinner className={styles.spinner} size='medium' />
+        <Spinner className={styles.spinner} size='large' />
       </div>
     );
   }

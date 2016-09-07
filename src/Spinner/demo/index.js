@@ -1,4 +1,5 @@
 import React, {PureComponent} from 'react';
+import ColoredSpinnerDemo from './ColoredSpinnerDemo';
 import DemoView from '../../demo/index';
 import RegularSpinnerDemo from './RegularSpinnerDemo';
 
@@ -8,7 +9,8 @@ export default class SpinnerDemo extends PureComponent {
 
   render () {
     const demos = [
-      {title: 'Spinner', component: RegularSpinnerDemo}
+      {title: 'Spinner', component: RegularSpinnerDemo},
+      {title: 'Colored Spinner', component: ColoredSpinnerDemo},
     ];
 
     return (
