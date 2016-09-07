@@ -20,7 +20,7 @@ export default (text, word, tag = 'span', className, insertZeroWidthChar = false
   // JavaScript doesn't support negative lookbehinds... Of course.
   // const negativeLookbehind = `(?<!<${tag} class="${className}">)`;
 
-  // Looks behind the word to make sure we don't match words already ending in the same HTML tag
+  // Looks ahead of the word to make sure we don't match words already ending in the same HTML tag
   const negativeLookahead = `(?!${escapeRegExp(closingTag)})`;
 
   const matcher = new RegExp(`${escapeRegExp(word)}${negativeLookahead}`, 'g');

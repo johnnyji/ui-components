@@ -1,5 +1,6 @@
 /* eslint-disable react/no-danger */
 import React, {Component} from 'react';
+import Button from '../../Button/Button';
 import convertToHtml from '../utils/convertToHtml';
 import HighlightEditor from '../decorators/HighlightEditor';
 import highlightWords from '../utils/highlightWords';
@@ -23,6 +24,7 @@ export default class HighlightEditorDemo extends Component {
     highlightWords: Immutable.List(),
     highlightWordsString: '',
     html: '',
+    outputMode: 'ce',
     rawHtml: ''
   };
 
@@ -42,17 +44,47 @@ export default class HighlightEditorDemo extends Component {
             ref="editor" />
         </div>
         <div className={styles.HighlightEditorDemo__section}>
-          <h3>Content Editable Output</h3>
-          <label>Current highlight color: {this.state.hex}</label>
-          <input type='color' value={this.state.hex} onChange={this._handlePickColor} />
-          <div
-            className={styles.Demo__html}
-            dangerouslySetInnerHTML={{__html: this.state.html}}>
+          <h3>Editor Output</h3>
+          <div>
+            <Button
+              active={this.state.outputMode === 'ce'}
+              name='ce'
+              onClick={this._handleMode}>
+              Content Editable
+            </Button>
+            <Button
+              active={this.state.outputMode === 'html'}
+              name='html'
+              onClick={this._handleMode}>
+              HTML
+            </Button>
           </div>
+          {this.state.outputMode === 'ce' ? this._renderContentEditable() : this._renderHtml()}
         </div>
       </div>
     );
   }
+
+  _renderContentEditable = () => {
+    return (
+      <div>
+        <label>Current highlight color: {this.state.hex}</label>
+        <input type='color' value={this.state.hex} onChange={this._handlePickColor} />
+        <div
+          className={styles.Demo__html}
+          dangerouslySetInnerHTML={{__html: this.state.html}}>
+        </div>
+      </div>
+    );
+  };
+
+  _renderHtml = () => {
+    return (
+      <div className={styles.Demo__html}>
+        {this.state.html}
+      </div>
+    );
+  };
 
   _handleUpdate = (content) => {
     // HTML Before we add styles to the mark tags
@@ -73,6 +105,10 @@ export default class HighlightEditorDemo extends Component {
       highlightWordsString: value,
       highlightWords: words,
     });
+  };
+
+  _handleMode = (mode) => {
+    this.setState({outputMode: mode});
   };
 
   _handlePickColor = (e) => {

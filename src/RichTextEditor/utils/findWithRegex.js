@@ -14,6 +14,8 @@ export default (regex, text, cb) => {
 
   while ((matchArr = regex.exec(text)) !== null) {
     start = matchArr.index;
+    // Invokes a callback for with the range of every highlightable word found
+    // in the text
     cb(start, start + matchArr[0].length);
   }
 };

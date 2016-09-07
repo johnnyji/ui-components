@@ -99,7 +99,7 @@ export default class TooltipAnchor extends Component {
         {children}
         {shown && React.cloneElement(tooltip, {
           ref: 'tooltip',
-          style: {position: 'fixed', ...tooltipPosition}
+          style: {...tooltip.props.style, position: 'fixed', ...tooltipPosition}
         })}
       </div>
     );
@@ -216,27 +216,25 @@ export default class TooltipAnchor extends Component {
   }
 
   _handlePlacementUpdate = () => {
-    if (this.state.shown) {
-      // We need to calculate a mock position of the tooltip using the placement
-      // the user originally intended (the placement prop). This mock position is then
-      // used to polyfill the real tooltip positions in `_calculatePlacement`. The reason
-      // we mock a position is because when we resize/scroll, the tooltip will actually try to shrink
-      // itself in order to adapt to the browser and try to fit inside.
-      //
-      // Instead, a mock position (because its not rendered and therefore non-changeable), will
-      // explicitly tell us whether or not the tooltip is going over the edge of the browser
-      const mockPosBasedOnOriginalPlacement = this._calculateTooltipPos(this.props.placement);
+    // We need to calculate a mock position of the tooltip using the placement
+    // the user originally intended (the placement prop). This mock position is then
+    // used to polyfill the real tooltip positions in `_calculatePlacement`. The reason
+    // we mock a position is because when we resize/scroll, the tooltip will actually try to shrink
+    // itself in order to adapt to the browser and try to fit inside.
+    //
+    // Instead, a mock position (because its not rendered and therefore non-changeable), will
+    // explicitly tell us whether or not the tooltip is going over the edge of the browser
+    const mockPosBasedOnOriginalPlacement = this._calculateTooltipPos(this.props.placement);
 
-      // We calculate the most optimal placement here using the user's original intended
-      // position (prop) and a polyfill of where the tooltip is suppose to be rendered. This way,
-      // if the tooltip was suppose to overflow the browser's edge. We can change the placement programatically
-      const placement = this._calculatePlacement(this.props.placement, mockPosBasedOnOriginalPlacement);
+    // We calculate the most optimal placement here using the user's original intended
+    // position (prop) and a polyfill of where the tooltip is suppose to be rendered. This way,
+    // if the tooltip was suppose to overflow the browser's edge. We can change the placement programatically
+    const placement = this._calculatePlacement(this.props.placement, mockPosBasedOnOriginalPlacement);
 
-      // Calculate the real position using the edge-detection optimized placement
-      const tooltipPosition = this._calculateTooltipPos(placement);
+    // Calculate the real position using the edge-detection optimized placement
+    const tooltipPosition = this._calculateTooltipPos(placement);
 
-      this.setState({placement, tooltipPosition});
-    }
+    this.setState({placement, tooltipPosition});
   };
 
   _hideTooltip = () => {

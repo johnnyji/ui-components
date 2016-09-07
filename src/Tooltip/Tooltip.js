@@ -1,15 +1,14 @@
-import React, {Component, PropTypes} from 'react';
+import React, {PureComponent, PropTypes} from 'react';
 import classNames from 'classnames';
-import pureRender from 'pure-render-decorator';
 import styles from './Tooltip.scss';
 
-@pureRender
-export default class Tooltip extends Component {
+export default class Tooltip extends PureComponent {
 
   static displayName = 'Tooltip';
 
   static propTypes = {
-    className: PropTypes.string
+    className: PropTypes.string,
+    style: PropTypes.shape({})
   };
 
   render() {

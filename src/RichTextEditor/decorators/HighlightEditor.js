@@ -38,6 +38,8 @@ export default (ComposedEditorComponent) => (class HighlightEditor extends Compo
     const {decorators, highlightWords: words} = this.props;
     const {decorators: nextDecorators, highlightWords: nextWords} = nextProps;
 
+    // If the words to highlight or the decorators change, we need to reconstruct
+    // the decorators
     if (!Immutable.is(words, nextWords) || !Immutable.is(decorators, nextDecorators)) {
       this.setState({decorators: this._combineDecorators(nextProps)});
     }
