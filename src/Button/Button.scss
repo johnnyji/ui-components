@@ -9,6 +9,10 @@
   padding: 6px 12px;
 }
 
+.pill {
+  border-radius: 16px;
+}
+
 .active {
   color: $white;
   background-color: $brand;

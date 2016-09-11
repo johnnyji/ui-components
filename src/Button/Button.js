@@ -1,10 +1,8 @@
-import React, {Component, PropTypes} from 'react';
+import React, {PropTypes, PureComponent} from 'react';
 import classNames from 'classnames';
 import styles from './Button.scss';
-import pureRender from 'pure-render-decorator';
 
-@pureRender
-export default class Button extends Component {
+export default class Button extends PureComponent {
 
   static displayName = 'Button';
 
@@ -13,21 +11,26 @@ export default class Button extends Component {
     className: PropTypes.string,
     disabled: PropTypes.bool.isRequired,
     name: PropTypes.string,
-    onClick: PropTypes.func
+    onClick: PropTypes.func,
+    isPill: PropTypes.bool.isRequired
   };
 
   static defaultProps = {
-    disabled: false
+    disabled: false,
+    isPill: false
   };
   
   render() {
-    const {active, className, disabled, name} = this.props;
+    const {active, className, disabled, name, isPill} = this.props;
 
     const classes = classNames(
       className,
       styles.main,
-      {[styles.active]: active && !disabled},
-      {[styles.disabled]: disabled}
+      {
+        [styles.active]: active && !disabled,
+        [styles.disabled]: disabled,
+        [styles.pill]: isPill
+      }
     );
 
     return (

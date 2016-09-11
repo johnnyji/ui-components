@@ -1,19 +1,18 @@
-import React, {Component} from 'react';
+import React, {PureComponent} from 'react';
 import DemoView from '../../demo/index';
-import ActiveButtonDemo from './ActiveButtonDemo';
 import DisabledButtonDemo from './DisabledButtonDemo';
+import PillButtonDemo from './PillButtonDemo';
 import RegularButtonDemo from './RegularButtonDemo';
 import pureRender from 'pure-render-decorator';
 
-@pureRender
-export default class ButtonDemo extends Component {
+export default class ButtonDemo extends PureComponent {
 
   static displayName = 'ButtonDemo';
 
   render () {
     const demos = [
       {title: 'Regular Button', component: RegularButtonDemo},
-      {title: 'Active Button', component: ActiveButtonDemo},
+      {title: 'Pill Button', component: PillButtonDemo},
       {title: 'Disabled Button', component: DisabledButtonDemo}
     ];
 

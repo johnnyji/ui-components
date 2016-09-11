@@ -1,18 +1,18 @@
-import React, {Component} from 'react';
+import React, {PureComponent} from 'react';
 import Button from '../Button';
-import pureRender from 'pure-render-decorator';
+import Icon from '../../Icon/Icon';
 import styles from './index.scss';
 
-@pureRender
-export default class RegularButtonDemo extends Component {
+export default class RegularButtonDemo extends PureComponent {
 
   static displayName = 'RegularButtonDemo';
   
   render() {
     return (
       <div className={styles.main}>
-        <Button className={styles.button} onClick={this._handleClick}>I am clickable!</Button>
-        <Button className={styles.button} onClick={this._handleClick}>I am clickable!</Button>
+        <Button className={styles.block} onClick={this._handleClick}>Regular Button</Button>
+        <Button className={styles.block} onClick={this._handleClick}><Icon name='add-group' /> Icon Button!</Button>
+        <Button active={true} className={styles.block}>Active Button</Button>
       </div>
     );
   }
