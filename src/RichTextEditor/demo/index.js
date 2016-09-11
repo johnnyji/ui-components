@@ -1,11 +1,11 @@
-import React, {Component} from 'react';
+import React, {PureComponent} from 'react';
 import DemoView from '../../demo/index';
 import RegularEditorDemo from './RegularEditorDemo';
 import HighlightEditorDemo from './HighlightEditorDemo';
 import pureRender from 'pure-render-decorator';
 
 @pureRender
-export default class RichTextEditorDemo extends Component {
+export default class RichTextEditorDemo extends PureComponent {
 
   render () {
     const demos = [

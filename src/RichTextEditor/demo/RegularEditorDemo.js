@@ -1,8 +1,8 @@
-import React, {Component} from 'react';
+import React, {PureComponent} from 'react';
 import RichTextEditor from '../RichTextEditor';
 import styles from './index.scss';
 
-export default class RichTextEditorDemo extends Component {
+export default class RichTextEditorDemo extends PureComponent {
 
   static displayName = 'RichTextEditorDemo';
   

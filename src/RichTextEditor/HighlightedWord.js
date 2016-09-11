@@ -1,10 +1,8 @@
-import React, {Component} from 'react';
-import pureRender from 'pure-render-decorator';
+import React, {PureComponent} from 'react';
 import styles from './HighlightedWord.scss';
 
 // This is the component that renders a word that's highlighted in the editor
-@pureRender
-export default class HighlightedWord extends Component {
+export default class HighlightedWord extends PureComponent {
 
   static displayName = 'HighlightedWord';
 

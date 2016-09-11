@@ -1,11 +1,11 @@
 /* eslint-disable react/no-danger */
-import React, {Component} from 'react';
+import React, {PureComponent} from 'react';
 import Button from '../../Button/Button';
 import convertToHtml from '../utils/convertToHtml';
 import HighlightEditor from '../decorators/HighlightEditor';
 import highlightWords from '../utils/highlightWords';
-import Immutable from 'immutable';
 import Input from '../../Input';
+import {List} from 'immutable';
 import RichTextEditor from '../RichTextEditor';
 import styles from './index.scss';
 
@@ -15,13 +15,13 @@ const styleHighlightTags = (hex) => (html) => {
 
 const Editor = HighlightEditor(RichTextEditor);
 
-export default class HighlightEditorDemo extends Component {
+export default class HighlightEditorDemo extends PureComponent {
 
   static displayName = 'HighlightEditorDemo';
 
   state = {
     hex: '#F5D76E',
-    highlightWords: Immutable.List(),
+    highlightWords: List(),
     highlightWordsString: '',
     html: '',
     outputMode: 'ce',
@@ -100,7 +100,7 @@ export default class HighlightEditorDemo extends Component {
   };
 
   _handleKeywordChange = (value) => {
-    const words = Immutable.List(value.split(' '));
+    const words = List(value.split(' '));
     this.setState({
       highlightWordsString: value,
       highlightWords: words,

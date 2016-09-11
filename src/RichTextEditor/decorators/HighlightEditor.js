@@ -1,19 +1,19 @@
-import React, {Component, PropTypes} from 'react';
+import React, {PropTypes, PureComponent} from 'react';
 import createRegexFromWords from '../utils/createRegexFromWords';
 import CustomPropTypes from '../utils/CustomPropTypes';
-import findWithRegex from '../utils/findWithRegex';
+import {findHighlightableWord} from '../utils/findWithRegex';
 import HighlightedWord from '../HighlightedWord';
-import Immutable from 'immutable';
+import {is, List} from 'immutable';
 import ImmutablePropTypes from 'react-immutable-proptypes';
 
 // Finds each instance of a word in the contentBlock that matches the regex,
 // and then fires the callback for each found word, so it can be replaced by our custom HighlightedWord
 // component
 const highlightWordStrategy = (regex) => (contentBlock, cb) => {
-  findWithRegex(regex, contentBlock.getText(), cb);
+  findHighlightableWord(regex, contentBlock.getText(), contentBlock.getCharacterList(), cb);
 };
 
-export default (ComposedEditorComponent) => (class HighlightEditor extends Component {
+export default (ComposedEditorComponent) => (class HighlightEditor extends PureComponent {
 
   static displayName = 'HighlightEditor';
 
@@ -23,8 +23,8 @@ export default (ComposedEditorComponent) => (class HighlightEditor extends Compo
   };
 
   static defaultProps = {
-    decorators: Immutable.List(),
-    highlightWords: Immutable.List()
+    decorators: List(),
+    highlightWords: List()
   };
 
   constructor(props) {
@@ -40,7 +40,7 @@ export default (ComposedEditorComponent) => (class HighlightEditor extends Compo
 
     // If the words to highlight or the decorators change, we need to reconstruct
     // the decorators
-    if (!Immutable.is(words, nextWords) || !Immutable.is(decorators, nextDecorators)) {
+    if (!is(words, nextWords) || !is(decorators, nextDecorators)) {
       this.setState({decorators: this._combineDecorators(nextProps)});
     }
   }

@@ -1,16 +1,14 @@
-import React, {Component, PropTypes} from 'react';
+import React, {PropTypes, PureComponent} from 'react';
 import {CompositeDecorator, ContentState, Editor, EditorState, RichUtils} from 'draft-js';
 import classNames from 'classnames';
 import CustomPropTypes from './utils/CustomPropTypes';
 import Immutable from 'immutable';
 import onstop from 'onstop';
-import pureRender from 'pure-render-decorator';
 import RichTextEditorHeader from './RichTextEditorHeader';
 import styles from './RichTextEditor.scss';
 import textStyles from './textStyles.scss';
 
-@pureRender
-export default class RichTextEditor extends Component {
+export default class RichTextEditor extends PureComponent {
 
   static displayName = 'RichTextEditor';
 

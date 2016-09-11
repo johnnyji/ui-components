@@ -1,12 +1,10 @@
-import React, {Component, PropTypes} from 'react';
+import React, {PropTypes, PureComponent} from 'react';
 import config from './config';
 import {EditorState} from 'draft-js';
-import pureRender from 'pure-render-decorator';
 import RichTextEditorStyleButton from './RichTextEditorStyleButton';
 import styles from './RichTextEditorHeader.scss';
 
-@pureRender
-export default class RichTextEditorHeader extends Component {
+export default class RichTextEditorHeader extends PureComponent {
 
   static displayName = 'RichTextEditorHeader';
 

@@ -20,7 +20,6 @@ module.exports = {
     extensions: ['', '.js', '.json', '.scss']
   },
   plugins: [
-    // Extracts all the styles into a single `style.css` file served at the `publicPath`
     new webpack.DefinePlugin({
       'process.env': {
         'NODE_ENV': JSON.stringify('production')

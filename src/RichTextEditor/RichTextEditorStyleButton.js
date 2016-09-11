@@ -1,4 +1,4 @@
-import React, {Component, PropTypes} from 'react';
+import React, {PropTypes, PureComponent} from 'react';
 import classNames from 'classnames';
 import config from './config';
 import pureRender from 'pure-render-decorator';
@@ -10,7 +10,7 @@ const inlineStyleStyles = config.inlineStyles.map(({style}) => style);
 const inlineStyleLabels = config.inlineStyles.map(({label}) => label);
 
 @pureRender
-export default class RichTextEditorStyleButton extends Component {
+export default class RichTextEditorStyleButton extends PureComponent {
 
   static displayName = 'RichTextEditorStyleButton';
 

@@ -4,14 +4,14 @@ import {stateToHTML} from 'draft-js-export-html';
 const BLOCKQUOTE_OPENING_TAG_MATCHER = new RegExp('<blockquote>', 'g');
 
 // An html transformer to add the proper styles to blockquotes
-const styleBlockquotes = (html) => {
-  return html.replace(
+const styleBlockquotes = (html) => (
+  html.replace(
     BLOCKQUOTE_OPENING_TAG_MATCHER,
     `<${config.text.blockquote.tag} style="${config.text.blockquote.style}">`
-  );
-};
+  )
+);
 
-export default (htmlTransformers) => (contentState, keepRaw) => {
+export default (htmlTransformers = []) => (contentState, keepRaw) => {
   const rawHtml = stateToHTML(contentState);
   if (keepRaw) return rawHtml;
   
@@ -20,10 +20,9 @@ export default (htmlTransformers) => (contentState, keepRaw) => {
   // If the user has specified custom html transformers
   // (such as highlighting mark tags a specific way), we want
   // to apply them here
-  (htmlTransformers || []).forEach((transformer) => {
+  htmlTransformers.forEach((transformer) => {
     html = transformer(html);
   });
 
-  // The fully transformed HTML
   return html;
 };
