@@ -1,9 +1,9 @@
 @import '../colors.scss';
+@import '../extends.scss';
 
 .main {
   background-color: $white;
-  height: 100%;
-  width: 100%;
+  border: 2px solid $gray-light;
   display: flex;
   flex-direction: column;
 }
@@ -12,19 +12,18 @@
   padding: 16px;
   position: relative;
   flex: 1 1 auto;
-  overflow-y: scroll;
 }
 
 // Styles the editor container
 .editor :global(.DraftEditor-root) {
-  background: #FFF;
-  font-family: courier, sans-serif;
+	@extend .text;
+  background: $white;
   font-size: 16px;
-  min-height: 100px;
+  min-height: 200px;
 }
 // Styles the editor content
 .editor :global(.public-DraftEditor-content) {
-  min-height: 100px;
+  min-height: 200px;
 }
 
 // The `placeholder` for Draft.js is a blocking div. Therefore,

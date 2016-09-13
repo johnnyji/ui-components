@@ -7,21 +7,26 @@
   justify-content: center;
 }
 
-.Demo__editor {
-  @extend .box-shadow;
+
+.button {
+  &:first-child { margin-left: 16px }
+  font-size: 16px;
 }
 
 .Demo__editor,
 .Demo__html {
-  height: 600px;
+  width: 500px;
+  min-height: 600px;
   margin-top: 16px;
-  width: 450px;
 }
 
 .Demo__html {
-  border: 1px solid $gray;
+  border: 2px solid $brand-primary-lighter;
+  word-wrap: break-word;
+  p { margin: 0 }
 }
 
 .HighlightEditorDemo__section {
   padding: 16px;
+  position: relative;
 }

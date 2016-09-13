@@ -32,7 +32,7 @@ export default class HighlightEditorDemo extends PureComponent {
     return (
       <div className={styles.content}>
         <div className={styles.HighlightEditorDemo__section}>
-          <h3>Rich Text Editor</h3>
+          <h2>Rich Text Editor</h2>
           <Input
             onUpdate={this._handleKeywordChange}
             label="Keyword to highlight (space seperated)"
@@ -44,21 +44,23 @@ export default class HighlightEditorDemo extends PureComponent {
             ref="editor" />
         </div>
         <div className={styles.HighlightEditorDemo__section}>
-          <h3>Editor Output</h3>
-          <div>
+          <h2>
+            Editor Output
             <Button
               active={this.state.outputMode === 'ce'}
+              className={styles.button}
               name='ce'
               onClick={this._handleMode}>
               Content Editable
             </Button>
             <Button
               active={this.state.outputMode === 'html'}
+              className={styles.button}
               name='html'
               onClick={this._handleMode}>
               HTML
             </Button>
-          </div>
+          </h2>
           {this.state.outputMode === 'ce' ? this._renderContentEditable() : this._renderHtml()}
         </div>
       </div>

@@ -46,7 +46,7 @@ export default class RichTextEditor extends PureComponent {
     this._onStopTyping = onstop(props.onStopTypingTimeout, this._handleStopTyping);
   }
 
-  componentWillReceiveProps (nextProps) {
+  componentWillReceiveProps(nextProps) {
     const {decorators} = this.props;
     const {decorators: nextDecorators} = nextProps;
 
@@ -59,13 +59,13 @@ export default class RichTextEditor extends PureComponent {
 
   }
 
-  componentDidMount () {
+  componentDidMount() {
     if (this.props.onStopTyping) {
       this.Editor.refs.editorContainer.addEventListener('keyup', this._onStopTyping);
     }
   }
 
-  componentWillUnmount () {
+  componentWillUnmount() {
     this.Editor.refs.editorContainer.removeEventListener('keyup', this._onStopTyping);
   }
 
@@ -83,7 +83,7 @@ export default class RichTextEditor extends PureComponent {
     );
     
     return (
-      <div className={classNames(className, styles.main)}>
+      <div className={classNames(styles.main, className)}>
         {enableRich &&
           <RichTextEditorHeader
             activeColor={activeColor}

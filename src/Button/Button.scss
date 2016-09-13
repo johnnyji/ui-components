@@ -1,6 +1,8 @@
 @import '../colors.scss';
+@import '../extends.scss';
 
 .main {
+  @extend .text;
   background: 0; 
   border: 2px solid $brand-primary;
   color: $brand-primary;
