@@ -1,8 +1,8 @@
 @import '../colors.scss';
 @import '../extends.scss';
 
-$folder-main: $blue-light;
-$folder-secondary: $blue-lighter;
+$folder-main: $brand-primary-light;
+$folder-secondary: $brand-primary-lighter;
 
 .main {
   display: flex;

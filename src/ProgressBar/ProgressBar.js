@@ -1,10 +1,8 @@
-import React, {Component, PropTypes} from 'react';
+import React, {PropTypes, PureComponent} from 'react';
 import classNames from 'classnames';
-import pureRender from 'pure-render-decorator';
 import styles from './ProgressBar.scss';
 
-@pureRender
-export default class ProgressBar extends Component {
+export default class ProgressBar extends PureComponent {
 
   static displayName = 'ProgressBar';
 
@@ -12,14 +10,14 @@ export default class ProgressBar extends Component {
     backgroundColor: PropTypes.string.isRequired,
     className: PropTypes.string,
     // TODO: Add more colors
-    color: PropTypes.oneOf(['blue']).isRequired,
+    color: PropTypes.oneOf(['purple']).isRequired,
     total: PropTypes.number.isRequired,
     value: PropTypes.number.isRequired
   };
 
   static defaultProps = {
     backgroundColor: '#FFF',
-    color: 'blue'
+    color: 'purple'
   };
   
   render() {

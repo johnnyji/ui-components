@@ -2,20 +2,21 @@
 
 .main {
   background: 0; 
-  border: 2px solid $brand;
-  color: $brand;
+  border: 2px solid $brand-primary;
+  color: $brand-primary;
   cursor: pointer;
+	font-weight: lighter;
   outline: 0;
-  padding: 6px 12px;
+  padding: 8px 16px;
 }
 
 .pill {
-  border-radius: 16px;
+  border-radius: 30px;
 }
 
 .active {
   color: $white;
-  background-color: $brand;
+  background-color: $brand-primary;
 }
 
 .disabled {

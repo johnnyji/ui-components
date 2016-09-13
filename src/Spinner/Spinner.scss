@@ -1,3 +1,5 @@
+@import '../colors';
+
 .wave {
   align-items: center;
   display: flex;
@@ -20,7 +22,7 @@
 }
 
 .rect {
-  background-color: #333;
+  background-color: $brand-secondary;
   height: 100%;
   display: inline-block;
 

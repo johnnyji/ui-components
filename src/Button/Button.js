@@ -24,13 +24,13 @@ export default class Button extends PureComponent {
     const {active, className, disabled, name, isPill} = this.props;
 
     const classes = classNames(
-      className,
       styles.main,
       {
         [styles.active]: active && !disabled,
         [styles.disabled]: disabled,
         [styles.pill]: isPill
-      }
+			},
+      className
     );
 
     return (
