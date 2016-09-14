@@ -1,4 +1,7 @@
+@import '../extends';
+
 .main {
+	@extend .text;
   display: inline-block;
   position: relative;
 }

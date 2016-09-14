@@ -38,6 +38,7 @@ $folder-secondary: $brand-primary-lighter;
 }
 
 .content {
+	@extend .text;
   background-color: $folder-main;
   box-shadow: 0 4px 8px 0 rgba(87, 71, 81, 0.2);  
   height: 85%;

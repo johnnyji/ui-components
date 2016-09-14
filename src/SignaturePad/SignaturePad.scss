@@ -23,6 +23,7 @@
 }
 
 .footer {
+	@extend .text;
   align-items: center;
   border-top: 2px dashed $gray;
   display: flex;

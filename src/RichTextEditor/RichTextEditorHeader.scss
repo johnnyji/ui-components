@@ -1,6 +1,8 @@
 @import '../colors.scss';
+@import '../extends.scss';
 
 .main {
+	@extend .text;
   padding: 12px 8px 0px;
 }
 
