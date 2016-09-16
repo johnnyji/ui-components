@@ -12,6 +12,10 @@ export default class Spinner extends PureComponent {
     size: PropTypes.oneOf(['small', 'medium', 'large']).isRequired
   };
 
+  static defaultProps = {
+    size: 'small'
+  };
+
   render() {
     const {className, classNameBar, size, ...restProps} = this.props;
     const classes = classNames(styles.wave, styles[`wave-${size}`], className);
