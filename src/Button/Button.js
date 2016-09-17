@@ -25,11 +25,9 @@ export default class Button extends PureComponent {
 
     const classes = classNames(
       styles.main,
-      {
-        [styles.active]: active && !disabled,
-        [styles.disabled]: disabled,
-        [styles.pill]: isPill
-			},
+      active && !disabled ? styles.active : null,
+      disabled ? styles.disabled : null,
+      isPill ? styles.pill : null,
       className
     );
 
