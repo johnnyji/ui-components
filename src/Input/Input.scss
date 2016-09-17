@@ -9,15 +9,32 @@
 	@extend .text;
   background: 0;
   border: 0;
-  border-bottom: 2px solid $brand-primary;
+  border-bottom: 1px solid $brand-secondary-light;
+  font-weight: normal;
   outline: 0;
   padding: 4px 2px;
   width: 100%;
+
+  &:focus {
+    border-bottom-color: $brand-secondary;
+  }
 }
 
 .disabled {
-  border-bottom: 2px dotted $disabled;
+  color: $brand-secondary-lighter;
+  border-bottom-color: $disabled;
   cursor: not-allowed;
+
+  &::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+    color: $brand-secondary-lighter;
+  }
+  &::-moz-placeholder { /* Firefox 19+ */
+    color: $brand-secondary-lighter;
+  }
+  &:-moz-placeholder { /* Firefox 18- */
+    color: $brand-secondary-lighter;
+  }
+
 }
 
 .error {

@@ -3,17 +3,27 @@ $purple-light: #913CE7;
 $purple-lighter: #9578FF;
 $orange: #FF4202;
 $white: #FFF;
-$gray: darken(#DADFE1, 5%);
-$gray-light: #DADFE1;
-$gray-dark: #62676A;
+
+$gray-dark: #404040;
+$gray-light: #CCC;
+$gray-lighter: #EBEBEB;
+$gray-lightest: #F5F5F5;
+$gray: #999;
 
 $brand-primary: $purple;
 $brand-primary-light: $purple-light;
 $brand-primary-lighter: $purple-lighter;
-$brand-secondary: $orange;
+
+$brand-secondary: $gray;
+$brand-secondary-dark: $gray-dark;
+$brand-secondary-light: $gray-light;
+$brand-secondary-lighter: darken($gray-lighter, 2%);
+$brand-secondary-lightest: $gray-lightest;
+
+$brand-tertiary: $orange;
 
 $error: #CF000F;
-$disabled: darken($gray, 5%);
+$disabled: $brand-secondary-lighter;
 $placeholder: $gray;
 $text: #282828;
 $warning: #F39C12;
