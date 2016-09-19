@@ -6,6 +6,7 @@ module.exports = [
   'Input',
   'ProgressBar',
   'RichTextEditor',
+  'SidebarNav',
   'SignaturePad',
   'Spinner',
   'Tooltip'
