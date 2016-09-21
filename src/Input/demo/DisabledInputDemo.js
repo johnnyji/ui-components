@@ -10,7 +10,7 @@ export default class DisabledInputDemo extends Component {
 
   render() {
     return (
-      <div className={styles.content}>
+      <div className={styles.main}>
         <Input
           className={styles.input}
           disabled={true}

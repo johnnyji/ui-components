@@ -1,0 +1,35 @@
+@import '../colors';
+
+.main {
+  align-items: center;
+  background-color: $gray-lightest;
+  display: flex;
+  justify-content: space-between;
+  min-width: 300px;
+  padding: 8px 16px;
+  position: fixed;
+  left: 50%;
+  top: 0;
+  transform: translateX(-50%);
+}
+
+.content {
+  text-align: center;
+  flex: 1 1 auto;
+}
+
+.closeButton {
+  margin-top: 2px;
+}
+
+.closeButton-default,
+.default { color: $purple }
+
+.closeButton-error,
+.error { background-color: $gray-lightest }
+
+.closeButton-success,
+.success { background-color: $gray-lightest }
+
+.closeButton-warning,
+.warning { background-color: $gray-lightest }

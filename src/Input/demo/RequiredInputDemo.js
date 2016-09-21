@@ -15,7 +15,7 @@ export default class RequiredInputDemo extends Component {
 
   render() {
     return (
-      <div className={styles.content}>
+      <div className={styles.main}>
         <Input
           className={styles.input}
           displayErrorOn='change'

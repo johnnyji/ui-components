@@ -15,7 +15,7 @@ export default class RegularInputDemo extends Component {
 
   render() {
     return (
-      <div className={styles.content}>
+      <div className={styles.main}>
         <div className={styles.label}>Value: {this.state.value}</div>
         <div className={styles.label}>Error: {this.state.error}</div>
         <Input

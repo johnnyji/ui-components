@@ -1,12 +1,13 @@
 module.exports = [
   'Button',
   'Clickable',
+  'FlashMessage',
   'Folder',
   'Icon',
   'Input',
   'ProgressBar',
   'RichTextEditor',
-  'SidebarNav',
+  // 'SidebarNav',
   'SignaturePad',
   'Spinner',
   'Tooltip'
