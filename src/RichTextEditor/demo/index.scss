@@ -1,10 +1,11 @@
 @import '../../colors.scss';
 @import '../../extends.scss';
 
-.content {
+.main {
+  align-items: center;
   display: flex;
-  flex-wrap: wrap;
   justify-content: center;
+  width: 100%;
 }
 
 
@@ -17,7 +18,7 @@
 .Demo__html {
   width: 500px;
   min-height: 600px;
-  margin-top: 16px;
+  margin: 16px 0;
 }
 
 .Demo__html {

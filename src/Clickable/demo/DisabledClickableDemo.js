@@ -7,7 +7,7 @@ import styles from './index.scss';
 export default class DisabledClickabledDemo extends Component {
 
   static displayName = 'DisabledClickabledDemo';
-  
+
   render() {
     return (
       <div className={styles.main}>
