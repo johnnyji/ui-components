@@ -59,16 +59,17 @@
     "immutable": "^3.8.1",
     "lodash": "^4.16.1",
     "node-sass": "^3.10.0",
+    "node-uuid": "^1.4.7",
     "onstop": "^1.1.0",
     "pure-render-decorator": "^1.1.1",
     "react": "^15.3.2",
-    "react-addons-css-transition-group": "^15.3.2",
     "react-dom": "^15.3.2",
     "react-immutable-proptypes": "^2.1.0",
     "react-keydown": "^1.6.2",
     "react-router": "^2.8.1",
     "react-tabs": "^0.8.0",
     "signature_pad": "^1.5.3",
-    "validator": "^5.7.0"
+    "validator": "^5.7.0",
+    "velocity-react": "^1.1.5"
   }
 }

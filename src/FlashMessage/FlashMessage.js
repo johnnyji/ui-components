@@ -3,8 +3,6 @@ import classNames from 'classnames';
 import Clickable from '../Clickable/Clickable';
 import Icon from '../Icon/Icon';
 import styles from './FlashMessage.scss';
-import TransitionGroup from 'react-addons-css-transition-group';
-import transitionStyles from './transitionStyles.scss';
 
 export default class FlashMessage extends PureComponent {
 
@@ -12,49 +10,37 @@ export default class FlashMessage extends PureComponent {
 
   static propTypes = {
     className: PropTypes.string,
-    content: PropTypes.oneOfType([
+    message: PropTypes.oneOfType([
       PropTypes.element,
       PropTypes.string
     ]).isRequired,
+    id: PropTypes.string.isRequired,
     onDismiss: PropTypes.func.isRequired,
     type: PropTypes.oneOf(['default', 'error', 'warning', 'success']).isRequired
   };
 
   static defaultProps = {
-    color: 'default'
+    type: 'default'
   };
 
   render() {
-    const {className, content, onDismiss, type} = this.props;
-    const classes = classNames(
-      styles.main,
-      className
-    );
-    const contentClasses = classNames(
-      styles.content,
-      styles[type]
-    );
-    const closeButtonClasses = classNames(
-      styles.closeButton,
-      styles[`closeButton-${type}`]
-    );
+    const {className, message, type} = this.props;
+    const classes = classNames(styles.main, className);
+    const messageClasses = classNames(styles.message, styles[type]);
+    const closeButtonClasses = classNames(styles.closeButton, styles[`closeButton-${type}`]);
 
     return (
-      <TransitionGroup
-        className={classes}
-        component="div"
-        onClick={onDismiss}
-        transitionName={transitionStyles}
-        transitionAppear={true}
-        transitionAppearTimeout={100}
-        transitionEnterTimeout={100}
-        transitionLeaveTimeout={100}>
-        <span className={contentClasses}>{content}</span>
-        <Clickable className={closeButtonClasses} onClick={onDismiss}>
+      <div className={classes}>
+        <span className={messageClasses}>{message}</span>
+        <Clickable className={closeButtonClasses} onClick={this._handleDismiss}>
           <Icon name='close' size={20} />
         </Clickable>
-      </TransitionGroup>
+      </div>
     );
   }
+
+  _handleDismiss = () => {
+    this.props.onDismiss(this.props.id);
+  };
 
 }
