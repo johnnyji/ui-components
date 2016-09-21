@@ -18,7 +18,7 @@ const ANIMATIONS = {
         rotateX: [0, 130],
       }, 1, {
         easing: 'ease-out',
-        display: 'block',
+        display: 'flex',
       }]
     ],
   }),
@@ -33,7 +33,7 @@ const ANIMATIONS = {
         rotateX: -70,
       }, 1, {
         easing: 'ease-out',
-        display: 'block',
+        display: 'flex',
       }]
     ],
   })
@@ -63,7 +63,7 @@ export default class FlashMessageContainer extends PureComponent {
       stagger: duration,
       duration,
       backwards: true,
-      display: 'block',
+      display: 'flex',
       style: {
         // Keep display none until Velocity sets the display at the beginning of animation
         display: 'none',
