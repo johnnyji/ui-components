@@ -5,10 +5,11 @@
 	@extend .text;
   background: 0;
   border: 0;
-  color: $gray;
+  color: $brand-secondary;
+  cursor: pointer;
   outline: 0;
 }
 
 .active {
-  color: $brand-secondary;
+  color: $brand-tertiary;
 }

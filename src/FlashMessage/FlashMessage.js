@@ -25,15 +25,14 @@ export default class FlashMessage extends PureComponent {
 
   render() {
     const {className, message, type} = this.props;
-    const classes = classNames(styles.main, className);
+    const classes = classNames(styles.main, className, styles[type]);
     const messageClasses = classNames(styles.message, styles[type]);
-    const closeButtonClasses = classNames(styles.closeButton, styles[`closeButton-${type}`]);
 
     return (
       <div className={classes}>
         <span className={messageClasses}>{message}</span>
-        <Clickable className={closeButtonClasses} onClick={this._handleDismiss}>
-          <Icon name='close' size={20} />
+        <Clickable onClick={this._handleDismiss}>
+          <Icon className={styles.closeButton} name='close' size={20} />
         </Clickable>
       </div>
     );
