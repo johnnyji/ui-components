@@ -12,7 +12,6 @@ export default class RegularClickabledDemo extends Component {
     return (
       <div className={styles.main}>
         <Clickable onClick={this._handleClick}>I am clickable!</Clickable>
-        <Clickable onClick={this._handleClick}>I am clickable!</Clickable>
       </div>
     );
   }

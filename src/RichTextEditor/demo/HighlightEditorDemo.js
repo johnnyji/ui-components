@@ -30,7 +30,7 @@ export default class HighlightEditorDemo extends PureComponent {
 
   render() {
     return (
-      <div className={styles.content}>
+      <div className={styles.main}>
         <div className={styles.HighlightEditorDemo__section}>
           <h2>Rich Text Editor</h2>
           <Input

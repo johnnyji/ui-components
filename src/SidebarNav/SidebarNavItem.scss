@@ -1,0 +1,20 @@
+@import '../colors';
+
+.main {
+  align-items: center;
+  cursor: pointer;
+  display: flex;
+  padding: 16px;
+  &:hover {
+    background-color: $brand-secondary-lighter;
+  }
+}
+
+.icon {
+  color: $brand-secondary;
+}
+
+.text {
+  color: $brand-secondary;
+  margin-left: 16px;
+}

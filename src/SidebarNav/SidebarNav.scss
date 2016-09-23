@@ -1,0 +1,22 @@
+@import '../colors';
+
+.main {
+  background-color: $brand-secondary-lightest;
+  height: 100%;
+  display: flex;
+  flex: 0 0 auto;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.navItems {
+  margin: 8px 0;
+}
+
+.isOpen {
+  width: auto;
+}
+
+.isClosed {
+  width: 0;
+}

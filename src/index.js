@@ -1,4 +1,6 @@
 import 'babel-polyfill';
+import './normalize.css';
+import './styles.scss';
 import {render} from 'react-dom';
 import {Router, hashHistory, IndexRoute, Route} from 'react-router';
 import React from 'react';

@@ -1,4 +1,5 @@
 /* eslint-disable react/no-did-update-set-state */
+/* eslint-disable react/no-find-dom-node */
 import React, {Component, PropTypes} from 'react';
 import classNames from 'classnames';
 import {findDOMNode} from 'react-dom';
@@ -316,3 +317,4 @@ export default class TooltipAnchor extends Component {
 
 }
 /* eslint-enable react/no-did-update-set-state */
+/* eslint-enable react/no-find-dom-node */

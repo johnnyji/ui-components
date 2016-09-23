@@ -1,3 +1,5 @@
+@import '../colors';
+
 .main,
 .tabs {
   height: 100%;
@@ -9,7 +11,11 @@
 }
 
 .content {
+  border: 1px solid $brand-secondary-lighter;
   display: flex;
+  width: 100%;
+  min-height: 600px;
+  height: auto;
 }
 
 .panel {

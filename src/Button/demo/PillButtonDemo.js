@@ -1,6 +1,5 @@
 import React, {PureComponent} from 'react';
 import Button from '../Button';
-import pureRender from 'pure-render-decorator';
 import styles from './index.scss';
 
 export default class PillButtonDemo extends PureComponent {

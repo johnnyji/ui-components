@@ -1,3 +1,4 @@
+/* eslint-disable no-loop-func */
 /**
  * Searchs through a string of text and finds ranges
  * of text that matches the given regex. Then proceeds to
@@ -10,6 +11,7 @@
  */
 export const findWithRegex = (regex, text, charList, cb) => {
   let start;
+  let matchArr;
 
   while ((matchArr = regex.exec(text)) !== null) {
     start = matchArr.index;
@@ -53,3 +55,4 @@ export const findHighlightableWord = (regex, text, charList, cb) => {
     }
   }
 };
+/* eslint-enable no-loop-func */

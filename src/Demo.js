@@ -1,9 +1,7 @@
-import React, {Component} from 'react';
+import React, {PureComponent} from 'react';
 import styles from './Demo.scss';
-import pureRender from 'pure-render-decorator';
 
-@pureRender
-export default class Demo extends Component {
+export default class Demo extends PureComponent {
 
   static displayName = 'Demo';
   

@@ -1,11 +1,18 @@
+$green: #27AE60;
+$orange: #FF4202;
+$orange-light: #F39C12;
 $purple: #673AB7;
 $purple-light: #913CE7;
 $purple-lighter: #9578FF;
-$orange: #FF4202;
+$red: #CF000F;
+$red-dark: darken($red, 5%);
+$red-light: lighten($red, 5%);
+$red-lighter: lighten($red-light, 5%);
+$red-lightest: lighten($red-lighter, 5%);
 $white: #FFF;
 
 $gray-dark: #404040;
-$gray-light: #CCC;
+$gray-light: lighten(#ACACAC, 5%);
 $gray-lighter: #EBEBEB;
 $gray-lightest: #F5F5F5;
 $gray: #999;
@@ -22,7 +29,7 @@ $brand-secondary-lightest: $gray-lightest;
 
 $brand-tertiary: $orange;
 
-$error: #CF000F;
+$error: $red;
 $disabled: $brand-secondary-lighter;
 $placeholder: $gray;
 $text: #282828;
