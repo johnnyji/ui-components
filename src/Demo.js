@@ -1,6 +1,5 @@
 import React, {PureComponent} from 'react';
 import styles from './Demo.scss';
-import pureRender from 'pure-render-decorator';
 
 export default class Demo extends PureComponent {
 

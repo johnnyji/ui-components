@@ -37,6 +37,7 @@ export default class SignaturePad extends Component {
     signing: false
   };
 
+  /* eslint-disable react/no-did-mount-set-state */
   componentDidMount() {
     // window.addEventListener('resize', this._debouncedSizeCanvas);
 
@@ -47,6 +48,7 @@ export default class SignaturePad extends Component {
     // the signature pad instance is existant before we render content
     this.setState({loaded: true});
   }
+  /* eslint-enable react/no-did-mount-set-state */
 
   // componentWillUnmount() {
   //   window.removeEventListener('resize', this._debouncedSizeCanvas);

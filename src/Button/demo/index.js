@@ -3,7 +3,6 @@ import DemoView from '../../demo/index';
 import DisabledButtonDemo from './DisabledButtonDemo';
 import PillButtonDemo from './PillButtonDemo';
 import RegularButtonDemo from './RegularButtonDemo';
-import pureRender from 'pure-render-decorator';
 
 export default class ButtonDemo extends PureComponent {
 
