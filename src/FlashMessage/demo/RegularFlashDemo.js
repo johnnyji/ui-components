@@ -18,10 +18,7 @@ export default class RegularFlashDemo extends PureComponent {
   render() {
     return (
       <div className={styles.main}>
-        <FlashMessageContainer
-          items={this.state.messages.valueSeq().toList()}
-          onDismiss={this._hideFlashMessage}
-          type="error" />
+        <FlashMessageContainer items={this.state.messages.valueSeq().toList()} onDismiss={this._dismissFlashMessage} />
         <h3>Choose flash message type:</h3>
         <div>
           <Button
@@ -54,7 +51,6 @@ export default class RegularFlashDemo extends PureComponent {
       <FlashMessage
         id={id}
         message="Hello!"
-        onDismiss={this._dismissFlashMessage}
         key={id}
         type={this.state.type} />
     );

@@ -46,6 +46,7 @@ export default class FlashMessageContainer extends PureComponent {
   static propTypes = {
     className: PropTypes.string,
     animationDuration: PropTypes.number.isRequired,
+    onDismiss: PropTypes.func.isRequired,
     items: ImmutablePropTypes.listOf(PropTypes.element).isRequired
   };
 
@@ -55,7 +56,7 @@ export default class FlashMessageContainer extends PureComponent {
   };
 
   render() {
-    const {animationDuration: duration, className, items} = this.props;
+    const {animationDuration: duration, className, onDismiss, items} = this.props;
     const {enter, leave} = ANIMATIONS;
 
     const enterAnimation = {
@@ -83,7 +84,9 @@ export default class FlashMessageContainer extends PureComponent {
         className={classNames(styles.main, className)}
         enter={enterAnimation}
         leave={leaveAnimation}>
-        {items}
+        {items.map((item) => {
+          return React.cloneElement(item, {onDismiss});
+        })}
       </VelocityTransitionGroup>
     );
   }
