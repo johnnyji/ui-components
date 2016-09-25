@@ -9,6 +9,7 @@ export default class Clickable extends Component {
   static propTypes = {
     className: PropTypes.string,
     disabled: PropTypes.bool.isRequired,
+    name: PropTypes.string,
     onClick: PropTypes.func.isRequired
   };
 
@@ -27,11 +28,15 @@ export default class Clickable extends Component {
     return (
       <button
         className={classes}
-        onClick={onClick}>
+        onClick={this._handleClick}>
         {children}
       </button>
     );
   }
+
+  _handleClick = () => {
+    this.props.onClick(this.props.name);
+  };
 
 }
 

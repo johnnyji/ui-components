@@ -10,6 +10,8 @@ export default class FlashMessage extends PureComponent {
 
   static propTypes = {
     className: PropTypes.string,
+    messageClassName: PropTypes.string,
+    buttonClassName: PropTypes.string,
     message: PropTypes.oneOfType([
       PropTypes.element,
       PropTypes.string
@@ -24,14 +26,14 @@ export default class FlashMessage extends PureComponent {
   };
 
   render() {
-    const {className, message, type} = this.props;
+    const {buttonClassName, className, message, messageClassName, type} = this.props;
     const classes = classNames(styles.main, className, styles[type]);
-    const messageClasses = classNames(styles.message, styles[type]);
+    const messageClasses = classNames(styles.message, styles[type], messageClassName);
 
     return (
       <div className={classes}>
         <span className={messageClasses}>{message}</span>
-        <Clickable onClick={this._handleDismiss}>
+        <Clickable className={buttonClassName} onClick={this._handleDismiss}>
           <Icon className={styles.closeButton} name='close' size={20} />
         </Clickable>
       </div>
