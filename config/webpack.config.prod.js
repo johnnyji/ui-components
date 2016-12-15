@@ -68,7 +68,8 @@ module.exports = {
         loader: 'style!css?modules!postcss'
       }
     ],
-    postcss: [autoprefixer]
-  }
+  },
+
+  postcss: [autoprefixer]
 };
 /* eslint-enable prefer-template */

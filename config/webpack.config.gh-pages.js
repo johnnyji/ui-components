@@ -53,6 +53,6 @@ module.exports = {
         loader: ExtractTextPlugin.extract('style', 'css?modules!postcss')
       }
     ],
-    postcss: [autoprefixer]
-  }
+  },
+  postcss: [autoprefixer]
 };

@@ -51,8 +51,7 @@ module.exports = {
         loader: 'style!css?modules!postcss'
       }
     ],
-    postcss: [autoprefixer],
     noParse: /\.min\.js/
-    // Implement hot module reloading for SCSS and JS
-  }
+  },
+  postcss: [autoprefixer]
 };
